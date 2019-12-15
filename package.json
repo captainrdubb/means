@@ -15,10 +15,14 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "react-scripts.cmd start",
-    "build": "react-scripts.cmd build",
-    "test": "react-scripts.cmd test",
-    "eject": "react-scripts.cmd eject"
+    "start": "react-scripts start",
+    "start:win": "react-scripts.cmd start",
+    "build": "react-scripts build",
+    "build:win": "react-scripts.cmd build",
+    "test": "react-scripts test",
+    "test:win": "react-scripts.cmd test",
+    "eject": "react-scripts eject",
+    "eject:win": "react-scripts.cmd eject"
   },
   "eslintConfig": {
     "extends": "react-app"
