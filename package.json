@@ -1,48 +1,24 @@
 {
   "name": "stardubbcash",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "@types/jest": "^24.0.0",
-    "@types/node": "^12.0.0",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-scripts": "3.3.0",
-    "rxjs": "^6.5.3",
-    "typescript": "~3.7.2"
-  },
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "start:win": "react-scripts.cmd start",
-    "build": "react-scripts build",
-    "build:win": "react-scripts.cmd build",
-    "test": "react-scripts test",
-    "test:win": "react-scripts.cmd test",
-    "eject": "react-scripts eject",
-    "eject:win": "react-scripts.cmd eject"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "repository": {
+    "type": "git",
+    "url": "git@ssh.dev.azure.com:v3/starshiprdubb/stardubbcash/stardubbcash"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "@types/office-js": "^1.0.55",
-    "@types/react": "^16.9.16",
-    "@types/react-dom": "^16.9.4",
-    "office-addin-manifest": "^1.4.15"
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-html-replace": "^1.6.2",
+    "gulp-react": "^4.0.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "gulp-uglify": "^3.0.2"
   }
 }
