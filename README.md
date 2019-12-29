@@ -1,4 +1,4 @@
 # Stardubb Cash
 
 ## For Reference
-https://tylermcginnis.com/react-js-tutorial-pt-2-building-react-applications-with-gulp-and-browserify/
+https://medium.com/@willsilversmith/setting-up-react-js-with-gulp-and-babel-329b7f0bab83
