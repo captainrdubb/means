@@ -1,24 +1,27 @@
 {
   "name": "stardubbcash",
   "version": "1.0.0",
-  "description": "",
+  "description": "Cash Flow Application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:dev": "gulp build:dev",
+    "watch": "npm run build:dev && gulp watch"
   },
   "repository": {
     "type": "git",
     "url": "git@ssh.dev.azure.com:v3/starshiprdubb/stardubbcash/stardubbcash"
   },
   "keywords": [],
-  "author": "",
+  "author": "Joel Rainear-Wills <captainrdubb@outlook.com>",
   "license": "ISC",
   "devDependencies": {
+    "browserify": "^16.5.0",
     "gulp": "^4.0.2",
-    "gulp-concat": "^2.6.1",
     "gulp-html-replace": "^1.6.2",
-    "gulp-react": "^4.0.0",
-    "gulp-typescript": "^6.0.0-alpha.1",
-    "gulp-uglify": "^3.0.2"
+    "gulp-streamify": "^1.0.2",
+    "gulp-uglify": "^3.0.2",
+    "reactify": "^1.1.1",
+    "vinyl-source-stream": "^2.0.0",
+    "watchify": "^3.11.1"
   }
 }
