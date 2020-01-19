@@ -4,8 +4,7 @@
   "description": "Cash Flow Application",
   "main": "index.js",
   "scripts": {
-    "build:dev": "gulp build:dev",
-    "watch": "npm run build:dev && gulp watch"
+    "dev": "gulp.cmd"
   },
   "repository": {
     "type": "git",
@@ -23,5 +22,9 @@
     "reactify": "^1.1.1",
     "vinyl-source-stream": "^2.0.0",
     "watchify": "^3.11.1"
+  },
+  "dependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   }
 }

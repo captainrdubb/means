@@ -6,16 +6,7 @@ var browserify = require('browserify');
 var watchify = require('watchify');
 var reactify = require('reactify');
 var streamify = require('gulp-streamify');
-
-var path = {
-  HTML: 'src/index.html',
-  MINIFIED_OUT: 'build.min.js',
-  OUT: 'build.js',
-  DEST: 'dist',
-  DEST_BUILD: 'dist/build',
-  DEST_SRC: 'dist/src',
-  ENTRY_POINT: 'src/index.js'
-};
+var path = require('./gulp-config');
 
 gulp.task('copy', function(){
   gulp.src(path.HTML)
@@ -28,7 +19,7 @@ gulp.task('watch', function() {
 var watcher  = watchify(browserify({
     entries: [path.ENTRY_POINT],
     transform: [reactify],
-    debug: true,
+    debug: process.env.NODE_ENV === 'development',
     cache: {}, packageCache: {}, fullPaths: true
   }));
 
@@ -57,7 +48,7 @@ gulp.task('build', function(){
 gulp.task('replaceHTML', function(){
   gulp.src(path.HTML)
     .pipe(htmlreplace({
-      'js': 'build/' + path.MINIFIED_OUT
+      'js': '~/' + path.MINIFIED_OUT
     }))
     .pipe(gulp.dest(path.DEST));
 });
