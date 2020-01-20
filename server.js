@@ -1,9 +1,9 @@
 const path = require('path');
-const config = require('../gulp-config');
+const config = require('./gulp-config');
 const express = require('express');
 const app = express();
 const port = 3000;
-const public = path.join('..', __dirname, config.DEST_BUILD);
+const public = path.join(__dirname, config.DEST);
 
 app.use(express.static(public));
 
