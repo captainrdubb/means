@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="TaskPaneApp">
+  <Id>e7cd158f-d961-4dfc-a5dc-fae5c08ed3bd</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>Stardubb</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="CRP Cash Flow" />
+  <Description DefaultValue="Cash flow tracker" />
+  <IconUrl DefaultValue="https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/money_envelope_add.png" />
+  <SupportUrl DefaultValue="https://www.google.com" />
+  <Hosts>
+    <Host Name="Workbook"/>
+  </Hosts>
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://localhost:5300" />
+  </DefaultSettings>
+  <Permissions>ReadWriteDocument</Permissions>
+</OfficeApp>
