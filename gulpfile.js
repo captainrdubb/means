@@ -9,6 +9,15 @@ const streamify = require('gulp-streamify');
 const del = require('del');
 const path = require('./gulp-config');
 
+const buildConfig = {
+  entries: [path.ENTRY_POINT],
+  extensions: ['.js', '.jsx'],
+  debug: process.env.NODE_ENV === 'development',
+  cache: {},
+  packageCache: {},
+  fullPaths: process.env.NODE_ENV === 'development'
+};
+
 gulp.task('clean', function() {
   return del(`${path.DEST}/**`);
 });
@@ -19,14 +28,10 @@ gulp.task('copy', function(done) {
 });
 
 gulp.task('watch', function() {
-  browserify({
-    entries: [path.ENTRY_POINT],
-    extensions: ['.js', '.jsx'],
-    debug: process.env.NODE_ENV === 'development',
-    cache: {},
-    packageCache: {},
-    fullPaths: true
-  })
+  console.log('Environment: ' + process.env.NODE_ENV);
+  gulp.watch(path.HTML, { ignoreInitial: false }, gulp.series('copy'));
+
+  var watcher = watchify(browserify(buildConfig))
     .transform(babelify, {
       presets: ['@babel/preset-env', '@babel/preset-react']
     })
@@ -34,43 +39,22 @@ gulp.task('watch', function() {
     .pipe(source(path.OUT))
     .pipe(gulp.dest(path.DEST));
 
-  gulp.watch(path.HTML, gulp.series('copy'));
-
-  var watcher = watchify(
-    browserify({
-      entries: [path.ENTRY_POINT],
-      transform: [
-        babelify,
-        { presets: ['@babel/preset-env', '@babel/preset-react'] }
-      ],
-      debug: process.env.NODE_ENV === 'development',
-      cache: {},
-      packageCache: {},
-      fullPaths: true
-    })
-  );
-
-  return watcher
-    .on('update', function() {
-      watcher
-        .bundle()
-        .pipe(source(path.OUT))
-        .pipe(gulp.dest(path.DEST));
-      console.log('Updated');
-    })
-    .bundle()
-    .pipe(source(path.OUT))
-    .pipe(gulp.dest(path.DEST));
+  return watcher.on('update', function() {
+    watcher
+      .transform(babelify, {
+        presets: ['@babel/preset-env', '@babel/preset-react']
+      })
+      .bundle()
+      .pipe(source(path.OUT))
+      .pipe(gulp.dest(path.DEST));
+  });
 });
 
 gulp.task('build', function() {
-  browserify({
-    entries: [path.ENTRY_POINT],
-    transform: [
-      babelify,
-      { presets: ['@babel/preset-env', '@babel/preset-react'] }
-    ]
-  })
+  browserify(buildConfig)
+    .transform(babelify, {
+      presets: ['@babel/preset-env', '@babel/preset-react']
+    })
     .bundle()
     .pipe(source(path.MINIFIED_OUT))
     .pipe(streamify(uglify(path.MINIFIED_OUT)))
@@ -90,4 +74,4 @@ gulp.task('replaceHTML', function() {
 
 gulp.task('production', gulp.series('clean', 'replaceHTML', 'build'));
 
-gulp.task('default', gulp.series('clean', 'copy', 'watch'));
+gulp.task('default', gulp.series('clean', 'watch'));

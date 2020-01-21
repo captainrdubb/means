@@ -4,8 +4,8 @@
   "description": "Cash Flow Application",
   "main": "index.js",
   "scripts": {
-    "dev": "gulp.cmd",
-    "serve": "node ./server.js"
+    "dev": "set NODE_ENV=development && gulp.cmd",
+    "build": "gulp.cmd build"
   },
   "repository": {
     "type": "git",
