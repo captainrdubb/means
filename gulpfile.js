@@ -18,16 +18,16 @@ const buildConfig = {
   fullPaths: process.env.NODE_ENV === 'development'
 };
 
-gulp.task('clean', function() {
+gulp.task('clean', function () {
   return del(`${path.DEST}/**`);
 });
 
-gulp.task('copy', function(done) {
+gulp.task('copy', function (done) {
   gulp.src(path.HTML).pipe(gulp.dest(path.DEST));
   done();
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', function () {
   console.log('Environment: ' + process.env.NODE_ENV);
   gulp.watch(path.HTML, { ignoreInitial: false }, gulp.series('copy'));
 
@@ -36,10 +36,12 @@ gulp.task('watch', function() {
       presets: ['@babel/preset-env', '@babel/preset-react']
     })
     .bundle()
+    .on('error', console.error)
     .pipe(source(path.OUT))
     .pipe(gulp.dest(path.DEST));
 
-  return watcher.on('update', function() {
+  return watcher.on('update', function () {
+    console.log('Detected file change, building...', { color: 'blue' });
     watcher
       .transform(babelify, {
         presets: ['@babel/preset-env', '@babel/preset-react']
@@ -47,10 +49,11 @@ gulp.task('watch', function() {
       .bundle()
       .pipe(source(path.OUT))
       .pipe(gulp.dest(path.DEST));
+    console.log('Finished building...', { color: 'green' });
   });
 });
 
-gulp.task('build', function() {
+gulp.task('build', function () {
   browserify(buildConfig)
     .transform(babelify, {
       presets: ['@babel/preset-env', '@babel/preset-react']
@@ -61,7 +64,7 @@ gulp.task('build', function() {
     .pipe(gulp.dest(path.DEST));
 });
 
-gulp.task('replaceHTML', function() {
+gulp.task('replaceHTML', function () {
   gulp
     .src(path.HTML)
     .pipe(
