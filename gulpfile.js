@@ -5,7 +5,6 @@ const source = require('vinyl-source-stream');
 const sourcemaps = require('gulp-sourcemaps');
 const browserify = require('browserify');
 const babelify = require('babelify');
-const streamify = require('gulp-streamify');
 const buffer = require('vinyl-buffer');
 const del = require('del');
 const path = require('./gulp-config');

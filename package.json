@@ -4,7 +4,7 @@
   "description": "Cash Flow Application",
   "main": "index.js",
   "scripts": {
-    "prod":"gulp.cmd prod",
+    "prod": "gulp.cmd prod",
     "dev": "gulp.cmd"
   },
   "repository": {
@@ -24,7 +24,6 @@
     "gulp": "^4.0.2",
     "gulp-html-replace": "^1.6.2",
     "gulp-sourcemaps": "^2.6.5",
-    "gulp-streamify": "^1.0.2",
     "gulp-uglify": "^3.0.2",
     "vinyl-source-stream": "^2.0.0",
     "watchify": "^3.11.1"
