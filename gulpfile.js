@@ -2,21 +2,13 @@ const gulp = require('gulp');
 const uglify = require('gulp-uglify');
 const htmlreplace = require('gulp-html-replace');
 const source = require('vinyl-source-stream');
+const sourcemaps = require('gulp-sourcemaps');
 const browserify = require('browserify');
-const watchify = require('watchify');
 const babelify = require('babelify');
 const streamify = require('gulp-streamify');
+const buffer = require('vinyl-buffer');
 const del = require('del');
 const path = require('./gulp-config');
-
-const buildConfig = {
-  entries: [path.ENTRY_POINT],
-  extensions: ['.js', '.jsx'],
-  debug: process.env.NODE_ENV === 'development',
-  cache: {},
-  packageCache: {},
-  fullPaths: process.env.NODE_ENV === 'development'
-};
 
 gulp.task('clean', function () {
   return del(`${path.DEST}/**`);
@@ -27,54 +19,61 @@ gulp.task('copy', function (done) {
   done();
 });
 
-gulp.task('watch', function () {
-  console.log('Environment: ' + process.env.NODE_ENV);
-  gulp.watch(path.HTML, { ignoreInitial: false }, gulp.series('copy'));
-
-  var watcher = watchify(browserify(buildConfig))
+gulp.task('build-dev', function (done) {
+  browserify({
+    entries: [path.ENTRY_POINT],
+    extensions: ['.js', '.jsx'],
+    debug: true,
+    fullPaths: true
+  })
     .transform(babelify, {
       presets: ['@babel/preset-env', '@babel/preset-react']
     })
     .bundle()
     .on('error', console.error)
     .pipe(source(path.OUT))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({ loadMaps: true }))
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(path.DEST));
-
-  return watcher.on('update', function () {
-    console.log('Detected file change, building...', { color: 'blue' });
-    watcher
-      .transform(babelify, {
-        presets: ['@babel/preset-env', '@babel/preset-react']
-      })
-      .bundle()
-      .pipe(source(path.OUT))
-      .pipe(gulp.dest(path.DEST));
-    console.log('Finished building...', { color: 'green' });
-  });
+    done();
 });
 
-gulp.task('build', function () {
-  browserify(buildConfig)
+gulp.task('watch', function () {
+  gulp.watch(path.HTML, gulp.series('copy'));
+  gulp.watch(path.SRC, gulp.series('build-dev'));
+});
+
+gulp.task('build', function (done) {
+  browserify({
+    entries: [path.ENTRY_POINT],
+    extensions: ['.js', '.jsx'],
+    debug: true,
+  })
     .transform(babelify, {
       presets: ['@babel/preset-env', '@babel/preset-react']
     })
     .bundle()
+    .on('error', console.error)
     .pipe(source(path.MINIFIED_OUT))
-    .pipe(streamify(uglify(path.MINIFIED_OUT)))
+    .pipe(buffer())
+    .pipe(uglify())
     .pipe(gulp.dest(path.DEST));
+    done();
 });
 
-gulp.task('replaceHTML', function () {
+gulp.task('replace-html', function (done) {
   gulp
     .src(path.HTML)
     .pipe(
       htmlreplace({
-        js: '~/' + path.MINIFIED_OUT
+        js: `/${path.MINIFIED_OUT}`
       })
     )
     .pipe(gulp.dest(path.DEST));
+    done();
 });
 
-gulp.task('production', gulp.series('clean', 'replaceHTML', 'build'));
+gulp.task('prod', gulp.series('clean', 'replace-html', 'build'));
 
-gulp.task('default', gulp.series('clean', 'watch'));
+gulp.task('default', gulp.series('clean', 'copy', 'build-dev', 'watch'));
