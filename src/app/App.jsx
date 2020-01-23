@@ -40,7 +40,7 @@ const App = () => {
         hidden={tabIndex !== 0}
         id={`cash-tab`}
         aria-labelledby={`cash-tab`}>
-        {tabIndex === 0 && <Box p={3}><h1>Cash</h1></Box>}
+        {tabIndex === 0 && <Box p={3}>Cash</Box>}
       </Typography>
       <Typography
         component='div'
@@ -48,7 +48,7 @@ const App = () => {
         hidden={tabIndex !== 1}
         id={`jobs-tab`}
         aria-labelledby={`jobs-tab`}>
-        {tabIndex === 1 && <Box p={3}><h1>Jobs</h1></Box>}
+        {tabIndex === 1 && <Box p={3}>Jobs</Box>}
       </Typography>
       <Typography
         component='div'
@@ -56,7 +56,7 @@ const App = () => {
         hidden={tabIndex !== 2}
         id={`customers-tab`}
         aria-labelledby={`customers-tab`}>
-        {tabIndex === 2 && <Box p={3}><h1>Customers</h1></Box>}
+        {tabIndex === 2 && <Box p={3}>Customers</Box>}
       </Typography>
     </div>
   );
