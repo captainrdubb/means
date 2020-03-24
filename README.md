@@ -20,7 +20,7 @@ Job Information
         - Job
         - Amount
         - Type (cash, check, electronic)
-        - Vendor
+        - Vendor (Paypal or something?) (depends on payment type?)
 
     Expenses
         - Amount

@@ -6,6 +6,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import { Jobs } from '../jobs';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,35 +30,26 @@ const App = () => {
           value={tabIndex}
           onChange={handleChange}
           aria-label='Cash Flow Navigation'>
-          <Tab label='Cash' aria-controls='cash-tab' />
           <Tab label='Jobs' aria-controls='jobs-tab' />
-          <Tab label='Customers' aria-controls='customers tab' />
+          <Tab label='Clients' aria-controls='clients-tab' />
         </Tabs>
       </AppBar>
       <Typography
         component='div'
         role='tabpanel'
         hidden={tabIndex !== 0}
-        id={`cash-tab`}
-        aria-labelledby={`cash-tab`}>
-        {tabIndex === 0 && <Box p={3}>Cash</Box>}
+        id={`jobs-tab`}
+        aria-labelledby={`jobs-tab`}>
+        {tabIndex === 0 && <Jobs></Jobs>}
       </Typography>
       <Typography
         component='div'
         role='tabpanel'
         hidden={tabIndex !== 1}
-        id={`jobs-tab`}
-        aria-labelledby={`jobs-tab`}>
+        id={`clients-tab`}
+        aria-labelledby={`clients-tab`}>
         {tabIndex === 1 && <Box p={3}>Jobs</Box>}
-      </Typography>
-      <Typography
-        component='div'
-        role='tabpanel'
-        hidden={tabIndex !== 2}
-        id={`customers-tab`}
-        aria-labelledby={`customers-tab`}>
-        {tabIndex === 2 && <Box p={3}>Customers</Box>}
-      </Typography>
+      </Typography>      
     </div>
   );
 };
