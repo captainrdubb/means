@@ -1,18 +1,18 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Divider from '@material-ui/core/Divider';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import Zoom from '@material-ui/core/Zoom';
-import CloseIcon from '@material-ui/icons/Close';
-import IconButton from '@material-ui/core/IconButton';
+import React from './node_modules/react';
+import { makeStyles } from './node_modules/@material-ui/core/styles';
+import List from './node_modules/@material-ui/core/List';
+import ListItem from './node_modules/@material-ui/core/ListItem';
+import Divider from './node_modules/@material-ui/core/Divider';
+import ListItemText from './node_modules/@material-ui/core/ListItemText';
+import ListItemAvatar from './node_modules/@material-ui/core/ListItemAvatar';
+import Avatar from './node_modules/@material-ui/core/Avatar';
+import Typography from './node_modules/@material-ui/core/Typography';
+import Card from './node_modules/@material-ui/core/Card';
+import CardContent from './node_modules/@material-ui/core/CardContent';
+import CardHeader from './node_modules/@material-ui/core/CardHeader';
+import Zoom from './node_modules/@material-ui/core/Zoom';
+import CloseIcon from './node_modules/@material-ui/icons/Close';
+import IconButton from './node_modules/@material-ui/core/IconButton';
 
 const userStyles = makeStyles((theme) => ({}));
 
