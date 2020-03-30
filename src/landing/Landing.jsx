@@ -1,23 +1,23 @@
-import React from './node_modules/react';
-import clsx from './node_modules/clsx';
-import { makeStyles, useTheme } from './node_modules/@material-ui/core/styles';
-import Drawer from './node_modules/@material-ui/core/Drawer';
-import CssBaseline from './node_modules/@material-ui/core/CssBaseline';
-import AppBar from './node_modules/@material-ui/core/AppBar';
-import Toolbar from './node_modules/@material-ui/core/Toolbar';
-import List from './node_modules/@material-ui/core/List';
-import Typography from './node_modules/@material-ui/core/Typography';
-import Divider from './node_modules/@material-ui/core/Divider';
-import IconButton from './node_modules/@material-ui/core/IconButton';
-import MenuIcon from './node_modules/@material-ui/icons/Menu';
-import ChevronLeftIcon from './node_modules/@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from './node_modules/@material-ui/icons/ChevronRight';
-import ListItem from './node_modules/@material-ui/core/ListItem';
-import ListItemIcon from './node_modules/@material-ui/core/ListItemIcon';
-import ListItemText from './node_modules/@material-ui/core/ListItemText';
-import InboxIcon from './node_modules/@material-ui/icons/MoveToInbox';
-import MailIcon from './node_modules/@material-ui/icons/Mail';
-import useMediaQuery from './node_modules/@material-ui/core/useMediaQuery'
+import React from 'react';
+import clsx from 'clsx';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 const drawerWidth = 240;
 

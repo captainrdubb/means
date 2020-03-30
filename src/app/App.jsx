@@ -1,7 +1,7 @@
-import React, { Component } from './node_modules/react';
+import React, { Component } from 'react';
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import { Landing } from '../landing';
-import ThemeProvider from './node_modules/@material-ui/styles/ThemeProvider';
-import createMuiTheme from './node_modules/@material-ui/core/styles/createMuiTheme';
 
 const theme = createMuiTheme();
 
