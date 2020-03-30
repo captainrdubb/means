@@ -92,6 +92,8 @@ export default function Landing() {
   const [open, setOpen] = React.useState(false);
   const isAlwaysOpen = useMediaQuery((theme) => theme.breakpoints.up('sm'));
 
+  React.useEffect(() => setOpen(isAlwaysOpen), [isAlwaysOpen]);
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -119,7 +121,7 @@ export default function Landing() {
         </Toolbar>
       </AppBar>
       <Drawer
-        onClick={() => toggleDrawer()}
+        onClick={() => (isAlwaysOpen ? '' : toggleDrawer())}
         className={classes.drawer}
         variant={isAlwaysOpen ? 'persistent' : 'temporary'}
         anchor='left'
@@ -128,13 +130,13 @@ export default function Landing() {
           paper: classes.drawerPaper
         }}>
         <div className={classes.drawerHeader}>
-          <IconButton onClick={toggleDrawer}>
+          {!isAlwaysOpen && <IconButton onClick={toggleDrawer}>
             {theme.direction === 'ltr' ? (
               <ChevronLeftIcon />
             ) : (
               <ChevronRightIcon />
             )}
-          </IconButton>
+          </IconButton>}
         </div>
         <Divider />
         <List>
