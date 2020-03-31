@@ -156,7 +156,7 @@ const Landing = () => {
         </div>
         <Divider />
         <List>
-          {['Jobs', 'Person'].map((text, index) => (
+          {['Jobs', 'Clients'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
                 {index % 2 ? <Build></Build> : <Person></Person>}
