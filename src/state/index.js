@@ -1,4 +1,4 @@
-import { publish, subscribe, keys } from './subjects';
+import { publish, subscribe, keys } from './Subjects';
 
 export default {
   publishTo: publish,

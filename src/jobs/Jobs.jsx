@@ -21,21 +21,26 @@ export default (props) => {
   const classes = useStyles();
   const [selected, setSelected] = React.useState();
   const [listHidden, setListHidden] = React.useState();
-
   appState.publishTo(appState.DATA_KEYS.APP_BAR_HEADER, 'Jobs');
 
+  const jobs = {
+    customer: {
+      firstName: 'Bob',
+      lastName: 'Vila'
+    },
+    location: {
+      title: 'Tool Time',
+      addressOne: '21 Jump St.',
+      addressTwo: '',
+      city: '',
+      state: '',
+      zip: ''
+    }
+  };
   return (
     <>
       <Zoom in={!selected} onExit={() => setListHidden(true)} appear={false}>
         <List hidden={listHidden}>
-          <ListItem button onClick={() => setSelected(true)}>
-            <ListItemAvatar>
-              <Avatar>BV</Avatar>
-            </ListItemAvatar>
-            <ListItemText
-              primary='This Old House'
-              secondary={<Typography>21 Jump St.</Typography>}></ListItemText>
-          </ListItem>
           <Divider variant='inset' component='li'></Divider>
           <ListItem button>
             <ListItemAvatar>
