@@ -13,13 +13,16 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Zoom from '@material-ui/core/Zoom';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
+import appState from '../state';
 
-const userStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles((theme) => ({}));
 
 export default (props) => {
-  const classes = userStyles();
+  const classes = useStyles();
   const [selected, setSelected] = React.useState();
   const [listHidden, setListHidden] = React.useState();
+
+  appState.publishTo(appState.DATA_KEYS.APP_BAR_HEADER, 'Jobs');
 
   return (
     <>

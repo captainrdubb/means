@@ -15,11 +15,12 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import Build from '@material-ui/icons/Build';
+import Person from '@material-ui/icons/Person';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Route, Switch, Redirect } from 'react-router';
 import { Jobs } from '../jobs';
+import appData from '../state';
 
 const drawerWidth = 240;
 
@@ -88,13 +89,24 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Landing = ({ location }) => {
+const Landing = () => {
   const classes = useStyles();
   const theme = useTheme();
+
   const [open, setOpen] = React.useState(false);
   const isAlwaysOpen = useMediaQuery((theme) => theme.breakpoints.up('sm'));
-
   React.useEffect(() => setOpen(isAlwaysOpen), [isAlwaysOpen]);
+
+  const [headerText, setHeaderText] = React.useState('Means');
+
+  React.useEffect(() => {
+    const { DATA_KEYS } = appData;
+    const subscription = appData.subscribeTo(
+      DATA_KEYS.APP_BAR_HEADER,
+      setHeaderText
+    );
+    return () => subscription.unsubscribe();
+  });
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -118,7 +130,7 @@ const Landing = ({ location }) => {
             <MenuIcon />
           </IconButton>
           <Typography variant='h6' noWrap>
-            Means
+            {headerText}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -144,21 +156,10 @@ const Landing = ({ location }) => {
         </div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          {['Jobs', 'Person'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {index % 2 ? <Build></Build> : <Person></Person>}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
@@ -173,6 +174,9 @@ const Landing = ({ location }) => {
         <Switch>
           <Route exact path='/'>
             <Redirect to='/jobs' />
+          </Route>
+          <Route exact path='/jobs'>
+            <Jobs></Jobs>
           </Route>
         </Switch>
       </main>
