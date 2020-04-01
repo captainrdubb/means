@@ -5,12 +5,14 @@ import { BehaviorSubject } from 'rxjs';
 //have a behavior subject for slice of state
 export const keys = {
   APP_BAR_HEADER: 'APP_BAR_HEADER',
-  SELECTED_JOB: 'SELECTED_JOB'
+  CLIENTS: 'CLIENTS',
+  JOBS: 'JOBS'
 };
 
 const state = {};
 
 state[keys.APP_BAR_HEADER] = new BehaviorSubject('Means');
+state[keys.CLIENTS] = new BehaviorSubject([]);
 state[keys.JOBS] = new BehaviorSubject([
   {
     id: 1,

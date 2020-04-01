@@ -19,6 +19,9 @@ import Build from '@material-ui/icons/Build';
 import Face from '@material-ui/icons/Face';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Route, Switch, Redirect } from 'react-router';
+import { useHistory } from 'react-router-dom';
+import { Clients } from '../clients';
+// import { JobDetail } from '../partial';
 import { Jobs } from '../jobs';
 import { JobDetail } from '../partial';
 import { DATA_KEYS, subscribeTo } from '../state';
@@ -91,14 +94,30 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Landing = () => {
-  const classes = useStyles();
   const theme = useTheme();
+  const classes = useStyles();
+  const history = useHistory();
 
   const [open, setOpen] = React.useState(false);
   const isAlwaysOpen = useMediaQuery((theme) => theme.breakpoints.up('sm'));
   React.useEffect(() => setOpen(isAlwaysOpen), [isAlwaysOpen]);
 
   const [headerText, setHeaderText] = React.useState('Means');
+
+  const onNavClick = (url) => history.push(url);
+
+  const links = [
+    {
+      title: 'Jobs',
+      url: '/jobs',
+      icon: <Build></Build>
+    },
+    {
+      title: 'Clients',
+      url: '/clients',
+      icon: <Face></Face>
+    }
+  ];
 
   React.useEffect(() => {
     const subscription = subscribeTo(DATA_KEYS.APP_BAR_HEADER, setHeaderText);
@@ -153,12 +172,10 @@ const Landing = () => {
         </div>
         <Divider />
         <List>
-          {['Jobs', 'Clients'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 ? <Face></Face> : <Build></Build>}
-              </ListItemIcon>
-              <ListItemText primary={text} />
+          {links.map(({ title, url, icon }, index) => (
+            <ListItem button key={title} onClick={() => onNavClick(url)}>
+              <ListItemIcon>{icon}</ListItemIcon>
+              <ListItemText primary={title} />
             </ListItem>
           ))}
         </List>
@@ -171,6 +188,9 @@ const Landing = () => {
         <Switch>
           <Route exact path='/'>
             <Redirect to='/jobs' />
+          </Route>
+          <Route exact path='/clients'>
+            <Clients></Clients>
           </Route>
           <Route exact path='/jobs'>
             <Jobs></Jobs>

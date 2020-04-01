@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { keys, subscribe } from './Subjects';
 
-const useJobs = () => {
+export const jobsHook = () => {
   const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
@@ -12,4 +12,13 @@ const useJobs = () => {
   return jobs;
 };
 
-export default useJobs;
+export const clientsHook = () => {
+  const [clients, setClients] = useState([]);
+
+  useEffect(() => {
+    const subscription = subscribe(keys.CLIENTS, setClients);
+    return () => subscription.unsubscribe();
+  });
+
+  return clients;
+};
