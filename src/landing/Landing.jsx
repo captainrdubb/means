@@ -16,11 +16,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Build from '@material-ui/icons/Build';
-import Person from '@material-ui/icons/Person';
+import Face from '@material-ui/icons/Face';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Route, Switch, Redirect } from 'react-router';
 import { Jobs } from '../jobs';
-import appData from '../state';
+import { JobDetail } from '../partial';
+import { DATA_KEYS, subscribeTo } from '../state';
 
 const drawerWidth = 240;
 
@@ -100,11 +101,7 @@ const Landing = () => {
   const [headerText, setHeaderText] = React.useState('Means');
 
   React.useEffect(() => {
-    const { DATA_KEYS } = appData;
-    const subscription = appData.subscribeTo(
-      DATA_KEYS.APP_BAR_HEADER,
-      setHeaderText
-    );
+    const subscription = subscribeTo(DATA_KEYS.APP_BAR_HEADER, setHeaderText);
     return () => subscription.unsubscribe();
   });
 
@@ -159,7 +156,7 @@ const Landing = () => {
           {['Jobs', 'Clients'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
-                {index % 2 ? <Build></Build> : <Person></Person>}
+                {index % 2 ? <Face></Face> : <Build></Build>}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
@@ -177,6 +174,9 @@ const Landing = () => {
           </Route>
           <Route exact path='/jobs'>
             <Jobs></Jobs>
+          </Route>
+          <Route exact path='/jobs/:id/detail'>
+            <JobDetail></JobDetail>
           </Route>
         </Switch>
       </main>

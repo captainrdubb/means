@@ -1,41 +1,26 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import CloseIcon from '@material-ui/icons/Close';
-import IconButton from '@material-ui/core/IconButton';
+import Build from '@material-ui/icons/Build';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { abbreviation } from '../utils/nameAbbreviation';
+import { Grid, TextField } from '@material-ui/core';
+import { useParams } from 'react-router-dom';
+import { publishTo, DATA_KEYS, useJobs } from '../state';
 
-const JobDetail = ({ job, onDeselected }) => {
-  if (!job) return (<div></div>);
-
-  const {
-    customer: { firstName, lastName },
-    location: { title, addressOne }
-  } = job;
+const JobDetail = () => {
+  const jobs = useJobs();
+  const params = useParams();
+  console.log(params);
+  const [job, setJob] = React.useState();
+  publishTo(DATA_KEYS.APP_BAR_HEADER, `Job - ${'Title'}`);
 
   return (
-    <Card>
-      <CardHeader
-        avatar={
-          <Avatar aria-label='client'>
-            {abbreviation(firstName, lastName)}
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label='close' onClick={() => onDeselected()}>
-            <CloseIcon />
-          </IconButton>
-        }
-        title={title}
-        subheader={addressOne}
-      />
-      <CardContent>
-        <Typography>Stuff Here</Typography>
-      </CardContent>
-    </Card>
+    <Grid container spacing={1} alignItems='center'>
+      <Grid item>
+        <TextField id='' label='Job Title' />
+      </Grid>
+    </Grid>
   );
 };
 
