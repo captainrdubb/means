@@ -5,12 +5,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 
 import { ClientItem } from '../partial';
-import { publishTo, DATA_KEYS, useClients } from '../state';
+import { publishTo, DATA_KEYS, useClients, NAV_STATES } from '../state';
 
 const useStyles = makeStyles((theme) => ({}));
 
 const Clients = (props) => {
-  publishTo(DATA_KEYS.APP_BAR_HEADER, 'Clients');
+  publishTo(DATA_KEYS.APP_BAR, { title: 'Clients', navState: NAV_STATES.BACK });
 
   const classes = useStyles();
   const history = useHistory();

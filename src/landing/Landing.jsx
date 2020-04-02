@@ -1,16 +1,12 @@
 import React from 'react';
-import clsx from 'clsx';
 import { useHistory } from 'react-router-dom';
 import { Route, Switch, Redirect } from 'react-router';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
-import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
@@ -23,8 +19,7 @@ import Drawer from '@material-ui/core/Drawer';
 import { Clients } from '../clients';
 // import { JobDetail } from '../partial';
 import { Jobs } from '../jobs';
-import { JobDetail } from '../partial';
-import { DATA_KEYS, subscribeTo, NAV_STATES } from '../state';
+import { JobDetail, MeansToolbar } from '../partial';
 
 const drawerWidth = 240;
 
@@ -35,12 +30,6 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3)
-  },
-  menuButton: {
-    marginRight: theme.spacing(2)
-  },
-  hide: {
-    display: 'none'
   },
   drawer: {
     width: drawerWidth,
@@ -77,55 +66,25 @@ const Landing = () => {
   const classes = useStyles();
   const history = useHistory();
   const [open, setOpen] = React.useState(false);
-  const [appBarState, setAppBarState] = React.useState({
-    title: '',
-    navState: ''
-  });
-
-  React.useEffect(() => {
-    const subscription = subscribeTo(DATA_KEYS.APP_BAR, setAppBarState);
-    return () => subscription.unsubscribe();
-  }, []);
 
   const onItemClick = (url) => history.push(url);
 
-  const getNavIcon = () => {
-    if (!appBarState) return <MenuIcon></MenuIcon>;
-    if (appBarState.navState === NAV_STATES.MENU) return <MenuIcon></MenuIcon>;
-    else return <ChevronLeftIcon />;
+  const toggleDrawer = () => {
+    setOpen(!open);
   };
 
-  const getAppBarTitle = () => {
-    if (!appBarState) return 'Means';
-    return appBarState.title;
-  };
-
-  const onNavClick = () => {
-    if (!appBarState) setOpen(!open);
-    else if (appBarState.navState === NAV_STATES.MENU) setOpen(!open);
-    else history.goBack();
+  const navBack = () => {
+    history.goBack();
   };
 
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position='fixed'>
-        <Toolbar>
-          <IconButton
-            color='inherit'
-            aria-label='open drawer'
-            onClick={onNavClick}
-            edge='start'
-            className={clsx(classes.menuButton, open && classes.hide)}>
-            {getNavIcon()}
-          </IconButton>
-          <Typography variant='h6' noWrap>
-            {getAppBarTitle()}
-          </Typography>
-        </Toolbar>
+        <MeansToolbar onMenuClick={toggleDrawer} onNavBack={navBack} />
       </AppBar>
       <Drawer
-        onClick={onNavClick}
+        onClick={toggleDrawer}
         className={classes.drawer}
         variant='temporary'
         anchor='left'
@@ -134,7 +93,7 @@ const Landing = () => {
           paper: classes.drawerPaper
         }}>
         <div className={classes.drawerHeader}>
-          <IconButton onClick={onNavClick}>
+          <IconButton onClick={toggleDrawer}>
             {theme.direction === 'ltr' ? (
               <ChevronLeftIcon />
             ) : (
