@@ -6,14 +6,17 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { abbreviation } from '../utils/nameAbbreviation';
 import { Grid, TextField } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
-import { publishTo, DATA_KEYS, useJobs } from '../state';
+import { publishTo, DATA_KEYS, NAV_STATES, useJobs } from '../state';
 
 const JobDetail = () => {
   const jobs = useJobs();
   const params = useParams();
   console.log(params);
   const [job, setJob] = React.useState();
-  publishTo(DATA_KEYS.APP_BAR_HEADER, `Job - ${'Title'}`);
+  publishTo(DATA_KEYS.APP_BAR, {
+    title: `Job - ${'Title'}`,
+    navState: NAV_STATES.BACK
+  });
 
   return (
     <Grid container spacing={1} alignItems='center'>

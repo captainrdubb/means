@@ -4,14 +4,25 @@ import { BehaviorSubject } from 'rxjs';
 //have a subscription method
 //have a behavior subject for slice of state
 export const keys = {
-  APP_BAR_HEADER: 'APP_BAR_HEADER',
+  APP_BAR: 'APP_BAR',
   CLIENTS: 'CLIENTS',
   JOBS: 'JOBS'
 };
 
+export const appBarNav = {
+  MENU: 'MENU',
+  BACK: 'BACK'
+};
+
 const state = {};
 
-state[keys.APP_BAR_HEADER] = new BehaviorSubject('Means');
+// UI STATE
+state[keys.APP_BAR] = new BehaviorSubject({
+  title: 'Means',
+  navState: appBarNav.MENU
+});
+
+// DATA STATE
 state[keys.CLIENTS] = new BehaviorSubject([]);
 state[keys.JOBS] = new BehaviorSubject([
   {

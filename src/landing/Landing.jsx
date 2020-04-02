@@ -1,14 +1,15 @@
 import React from 'react';
 import clsx from 'clsx';
+import { useHistory } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -17,14 +18,13 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Build from '@material-ui/icons/Build';
 import Face from '@material-ui/icons/Face';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Route, Switch, Redirect } from 'react-router';
-import { useHistory } from 'react-router-dom';
+import Drawer from '@material-ui/core/Drawer';
+
 import { Clients } from '../clients';
 // import { JobDetail } from '../partial';
 import { Jobs } from '../jobs';
 import { JobDetail } from '../partial';
-import { DATA_KEYS, subscribeTo } from '../state';
+import { DATA_KEYS, subscribeTo, NAV_STATES } from '../state';
 
 const drawerWidth = 240;
 
@@ -32,23 +32,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex'
   },
-  appBar: {
-    [theme.breakpoints.up('sm')]: {
-      transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen
-      })
-    }
-  },
-  appBarShift: {
-    [theme.breakpoints.up('sm')]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-      transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen
-      })
-    }
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3)
   },
   menuButton: {
     marginRight: theme.spacing(2)
@@ -70,120 +56,103 @@ const useStyles = makeStyles((theme) => ({
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end'
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    [theme.breakpoints.up('sm')]: {
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen
-      }),
-      marginLeft: -drawerWidth
-    }
-  },
-  contentShift: {
-    [theme.breakpoints.up('sm')]: {
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen
-      }),
-      marginLeft: 0
-    }
   }
 }));
+
+const links = [
+  {
+    title: 'Jobs',
+    url: '/jobs',
+    icon: <Build></Build>
+  },
+  {
+    title: 'Clients',
+    url: '/clients',
+    icon: <Face></Face>
+  }
+];
 
 const Landing = () => {
   const theme = useTheme();
   const classes = useStyles();
   const history = useHistory();
-
   const [open, setOpen] = React.useState(false);
-  const isAlwaysOpen = useMediaQuery((theme) => theme.breakpoints.up('sm'));
-  React.useEffect(() => setOpen(isAlwaysOpen), [isAlwaysOpen]);
-
-  const [headerText, setHeaderText] = React.useState('Means');
-
-  const onNavClick = (url) => history.push(url);
-
-  const links = [
-    {
-      title: 'Jobs',
-      url: '/jobs',
-      icon: <Build></Build>
-    },
-    {
-      title: 'Clients',
-      url: '/clients',
-      icon: <Face></Face>
-    }
-  ];
-
-  React.useEffect(() => {
-    const subscription = subscribeTo(DATA_KEYS.APP_BAR_HEADER, setHeaderText);
-    return () => subscription.unsubscribe();
+  const [appBarState, setAppBarState] = React.useState({
+    title: '',
+    navState: ''
   });
 
-  const toggleDrawer = () => {
-    setOpen(!open);
+  React.useEffect(() => {
+    const subscription = subscribeTo(DATA_KEYS.APP_BAR, setAppBarState);
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const onItemClick = (url) => history.push(url);
+
+  const getNavIcon = () => {
+    if (!appBarState) return <MenuIcon></MenuIcon>;
+    if (appBarState.navState === NAV_STATES.MENU) return <MenuIcon></MenuIcon>;
+    else return <ChevronLeftIcon />;
+  };
+
+  const getAppBarTitle = () => {
+    if (!appBarState) return 'Means';
+    return appBarState.title;
+  };
+
+  const onNavClick = () => {
+    if (!appBarState) setOpen(!open);
+    else if (appBarState.navState === NAV_STATES.MENU) setOpen(!open);
+    else history.goBack();
   };
 
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar
-        position='fixed'
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open
-        })}>
+      <AppBar position='fixed'>
         <Toolbar>
           <IconButton
             color='inherit'
             aria-label='open drawer'
-            onClick={toggleDrawer}
+            onClick={onNavClick}
             edge='start'
             className={clsx(classes.menuButton, open && classes.hide)}>
-            <MenuIcon />
+            {getNavIcon()}
           </IconButton>
           <Typography variant='h6' noWrap>
-            {headerText}
+            {getAppBarTitle()}
           </Typography>
         </Toolbar>
       </AppBar>
       <Drawer
-        onClick={() => (isAlwaysOpen ? '' : toggleDrawer())}
+        onClick={onNavClick}
         className={classes.drawer}
-        variant={isAlwaysOpen ? 'persistent' : 'temporary'}
+        variant='temporary'
         anchor='left'
         open={open}
         classes={{
           paper: classes.drawerPaper
         }}>
         <div className={classes.drawerHeader}>
-          {!isAlwaysOpen && (
-            <IconButton onClick={toggleDrawer}>
-              {theme.direction === 'ltr' ? (
-                <ChevronLeftIcon />
-              ) : (
-                <ChevronRightIcon />
-              )}
-            </IconButton>
-          )}
+          <IconButton onClick={onNavClick}>
+            {theme.direction === 'ltr' ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
+          </IconButton>
         </div>
         <Divider />
         <List>
           {links.map(({ title, url, icon }, index) => (
-            <ListItem button key={title} onClick={() => onNavClick(url)}>
+            <ListItem button key={title} onClick={() => onItemClick(url)}>
               <ListItemIcon>{icon}</ListItemIcon>
               <ListItemText primary={title} />
             </ListItem>
           ))}
         </List>
       </Drawer>
-      <main
-        className={clsx(classes.content, {
-          [classes.contentShift]: open
-        })}>
+      <main className={classes.content}>
         <div className={classes.drawerHeader} />
         <Switch>
           <Route exact path='/'>
