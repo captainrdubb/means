@@ -14,7 +14,7 @@ export const appBarNav = {
   BACK: 'BACK'
 };
 
-const state = {};
+export const state = {};
 
 // UI STATE
 state[keys.APP_BAR] = new BehaviorSubject({
@@ -23,16 +23,28 @@ state[keys.APP_BAR] = new BehaviorSubject({
 });
 
 // DATA STATE
-state[keys.CLIENTS] = new BehaviorSubject([]);
+state[keys.CLIENTS] = new BehaviorSubject([
+  {
+    id: 1,
+    firstName: 'Bob',
+    lastName: 'Vila'
+  },
+  {
+    id: 2,
+    firstName: 'Tim',
+    lastName: 'Taylor'
+  }
+]);
+
 state[keys.JOBS] = new BehaviorSubject([
   {
     id: 1,
-    customer: {
+    title: 'This Old House',
+    client: {
       firstName: 'Bob',
       lastName: 'Vila'
     },
     location: {
-      title: 'This Old House',
       addressOne: '21 Jump St.',
       addressTwo: '',
       city: '',
@@ -42,12 +54,12 @@ state[keys.JOBS] = new BehaviorSubject([
   },
   {
     id: 2,
-    customer: {
+    title: 'Tool Time',
+    client: {
       firstName: 'Tim',
       lastName: 'Taylor'
     },
     location: {
-      title: 'Tool Time',
       addressOne: '123 Sesame St.',
       addressTwo: '',
       city: '',

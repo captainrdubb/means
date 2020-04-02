@@ -7,15 +7,15 @@ import { abbreviation } from '../utils/nameAbbreviation';
 import Typography from '@material-ui/core/Typography';
 
 const JobListItem = ({ job, onSelected }) => {
-  const { customer, location } = job;
+  const { title, client, location } = job;
 
   return (
     <ListItem key={job.id} button onClick={() => onSelected(job)}>
       <ListItemAvatar>
-        <Avatar>{abbreviation(customer.firstName, customer.lastName)}</Avatar>
+        <Avatar>{abbreviation(client.firstName, client.lastName)}</Avatar>
       </ListItemAvatar>
       <ListItemText
-        primary={location.title}
+        primary={title}
         secondary={
           <Typography>{location.addressOne}</Typography>
         }></ListItemText>

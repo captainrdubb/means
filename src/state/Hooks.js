@@ -7,7 +7,7 @@ export const jobsHook = () => {
   useEffect(() => {
     const subscription = subscribe(keys.JOBS, setJobs);
     return () => subscription.unsubscribe();
-  });
+  }, []);
 
   return jobs;
 };
@@ -18,7 +18,7 @@ export const clientsHook = () => {
   useEffect(() => {
     const subscription = subscribe(keys.CLIENTS, setClients);
     return () => subscription.unsubscribe();
-  });
+  }, []);
 
   return clients;
 };
