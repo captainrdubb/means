@@ -27,12 +27,26 @@ state[keys.CLIENTS] = new BehaviorSubject([
   {
     id: 1,
     firstName: 'Bob',
-    lastName: 'Vila'
+    lastName: 'Vila',
+    location: {
+      addressOne: '21 Jump St.',
+      addressTwo: '',
+      city: '',
+      state: '',
+      zip: ''
+    }
   },
   {
     id: 2,
     firstName: 'Tim',
-    lastName: 'Taylor'
+    lastName: 'Taylor',
+    location: {
+      addressOne: '21 Jump St.',
+      addressTwo: '',
+      city: '',
+      state: '',
+      zip: ''
+    }
   }
 ]);
 

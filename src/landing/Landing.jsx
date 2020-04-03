@@ -15,6 +15,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Build from '@material-ui/icons/Build';
 import Face from '@material-ui/icons/Face';
 import Drawer from '@material-ui/core/Drawer';
+import Container from '@material-ui/core/Container';
 
 import { Clients } from '../clients';
 import { ClientDetail } from '../partial';
@@ -80,7 +81,7 @@ const Landing = () => {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position='fixed'>
+      <AppBar>
         <MeansToolbar onMenuClick={toggleDrawer} onNavBack={navBack} />
       </AppBar>
       <Drawer

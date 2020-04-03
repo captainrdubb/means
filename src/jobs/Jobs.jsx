@@ -13,10 +13,19 @@ export default () => {
   const jobs = useJobs();
   const classes = useStyles();
   const history = useHistory();
+  const [selected, setSelected] = React.useState([]);
 
   publishTo(DATA_KEYS.APP_BAR, { title: 'Jobs', navState: NAV_STATES.MENU });
 
-  const onJobSelected = (job) => history.push(`/jobs/${job.id}/detail`);
+  const onSelected = ({ id }) => {
+    const s = [...selected];
+    const index = s.findIndex((s) => s == id);
+    if (index < 0) s.splice(index, 1);
+    else s.push(id);
+    setSelected(s);
+  };
+
+  const onEdit = (job) => history.push(`/jobs/${job.id}/detail`);
 
   return (
     <List>
@@ -24,7 +33,10 @@ export default () => {
         return (
           <React.Fragment key={index}>
             {index > 0 && <Divider variant='inset' component='li'></Divider>}
-            <JobItem job={job} onSelected={onJobSelected}></JobItem>
+            <JobItem
+              job={job}
+              onEdit={onEdit}
+              onSelected={onSelected}></JobItem>
           </React.Fragment>
         );
       })}
