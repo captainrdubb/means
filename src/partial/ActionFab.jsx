@@ -6,6 +6,7 @@ import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AssessmentIcon from '@material-ui/icons/Assessment';
+import { DATA_KEYS, subscribeTo } from '../state';
 
 const useStyles = makeStyles((theme) => ({
   speedDial: {
@@ -31,7 +32,12 @@ const MainActions = () => {
   const classes = useStyles();
   const [direction, setDirection] = React.useState('up');
   const [open, setOpen] = React.useState(false);
-  const [hidden, setHidden] = React.useState(false);
+  const [fabState, setFabState] = React.useState({ hide: false });
+
+  React.useEffect(() => {
+    const subscription = subscribeTo(DATA_KEYS.ACTION_FAB, setFabState);
+    return () => subscription.unsubscribe();
+  }, []);
 
   const handleClose = () => {
     setOpen(false);
@@ -45,7 +51,7 @@ const MainActions = () => {
     <SpeedDial
       ariaLabel='SpeedDial example'
       className={classes.speedDial}
-      hidden={hidden}
+      hidden={fabState.hide}
       icon={<SpeedDialIcon />}
       onClose={handleClose}
       onOpen={handleOpen}

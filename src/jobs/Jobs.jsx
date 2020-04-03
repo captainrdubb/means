@@ -15,7 +15,7 @@ export default () => {
   const history = useHistory();
   const [selected, setSelected] = React.useState([]);
 
-  publishTo(DATA_KEYS.APP_BAR, { title: 'Jobs', navState: NAV_STATES.MENU });
+  publishTo(DATA_KEYS.MEANS_TOOLBAR, { title: 'Jobs', navState: NAV_STATES.MENU });
 
   const onSelected = ({ id }) => {
     const s = [...selected];

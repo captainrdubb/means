@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -22,13 +22,25 @@ const useStyles = makeStyles((theme) => ({
 const JobDetail = () => {
   const classes = useStyles();
   const clients = useClients();
+  const history = useHistory();
   const { id } = useParams();
   const [jobForm, setJobForm] = React.useState({ ...selectJob(id) });
 
-  publishTo(DATA_KEYS.APP_BAR, {
+  publishTo(DATA_KEYS.MEANS_TOOLBAR, {
     title: `Edit Job`,
     navState: NAV_STATES.BACK,
   });
+
+  publishTo(DATA_KEYS.ACTION_FAB, {
+    hide: true,
+  });
+
+  const onCancel = () => {
+    publishTo(DATA_KEYS.ACTION_FAB, {
+      hide: false,
+    });
+    history.goBack();
+  };
 
   const onClientChange = (client, reason) => {
     switch (reason) {
@@ -116,7 +128,11 @@ const JobDetail = () => {
             <Button variant='contained' color='primary'>
               Save
             </Button>
-            <Button variant='contained' color='secondary' className={classes.cancel}>
+            <Button
+              onClick={onCancel}
+              variant='contained'
+              color='secondary'
+              className={classes.cancel}>
               Cancel
             </Button>
           </Grid>

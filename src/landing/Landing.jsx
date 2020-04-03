@@ -119,7 +119,6 @@ const Landing = () => {
           <Route exact path='/clients'>
             <Clients></Clients>
           </Route>
-
           <Route exact path='/clients/:id/detail'>
             <ClientDetail></ClientDetail>
           </Route>

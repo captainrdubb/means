@@ -4,10 +4,10 @@ import { BehaviorSubject } from 'rxjs';
 //have a subscription method
 //have a behavior subject for slice of state
 export const keys = {
-  APP_BAR: 'APP_BAR',
+  MEANS_TOOLBAR: 'APP_BAR',
   CLIENTS: 'CLIENTS',
   JOBS: 'JOBS',
-  ACTION_BAR: 'ACTION_BAR',
+  ACTION_FAB: 'ACTION_FAB',
 };
 
 export const appBarNav = {
@@ -18,7 +18,7 @@ export const appBarNav = {
 export const state = {};
 
 // UI STATE
-state[keys.APP_BAR] = new BehaviorSubject({
+state[keys.MEANS_TOOLBAR] = new BehaviorSubject({
   title: 'Means',
   navState: appBarNav.MENU,
   actionBar: {
@@ -30,13 +30,7 @@ state[keys.APP_BAR] = new BehaviorSubject({
   },
 });
 
-state[keys.ACTION_BAR] = new BehaviorSubject({
-  onAdd: null,
-  onDelete: null,
-  enableAdd: true,
-  enableDelete: false,
-  enableReset: false,
-});
+state[keys.ACTION_FAB] = new BehaviorSubject({ hide: false });
 
 // DATA STATE
 state[keys.CLIENTS] = new BehaviorSubject([

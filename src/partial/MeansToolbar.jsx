@@ -22,7 +22,7 @@ const MeansToolbar = ({ onMenuClick, onNavBack }) => {
   });
 
   React.useEffect(() => {
-    const subscription = subscribeTo(DATA_KEYS.APP_BAR, setAppBarState);
+    const subscription = subscribeTo(DATA_KEYS.MEANS_TOOLBAR, setAppBarState);
     return () => subscription.unsubscribe();
   }, []);
 

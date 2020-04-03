@@ -10,7 +10,7 @@ import { publishTo, DATA_KEYS, useClients, NAV_STATES } from '../state';
 const useStyles = makeStyles((theme) => ({}));
 
 const Clients = (props) => {
-  publishTo(DATA_KEYS.APP_BAR, { title: 'Clients', navState: NAV_STATES.MENU });
+  publishTo(DATA_KEYS.MEANS_TOOLBAR, { title: 'Clients', navState: NAV_STATES.MENU });
 
   const classes = useStyles();
   const history = useHistory();

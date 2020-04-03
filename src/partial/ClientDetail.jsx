@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -15,13 +15,25 @@ const useStyles = makeStyles((theme) => ({
 
 const ClientDetail = () => {
   const classes = useStyles();
+  const history = useHistory();
   const { id } = useParams();
   const [clientForm, setClientForm] = React.useState({ ...selectClient(id) });
 
-  publishTo(DATA_KEYS.APP_BAR, {
+  publishTo(DATA_KEYS.MEANS_TOOLBAR, {
     title: `Edit Client`,
     navState: NAV_STATES.BACK,
   });
+
+  publishTo(DATA_KEYS.ACTION_FAB, {
+    hide: true,
+  });
+
+  const onCancel = () => {
+    publishTo(DATA_KEYS.ACTION_FAB, {
+      hide: false,
+    });
+    history.goBack();
+  };
 
   return (
     <Grid container>
@@ -109,6 +121,7 @@ const ClientDetail = () => {
               Save
             </Button>
             <Button
+              onClick={onCancel}
               variant='contained'
               color='secondary'
               className={classes.cancel}>
