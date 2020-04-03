@@ -1,5 +1,4 @@
 import React from 'react';
-import clsx from 'clsx';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
@@ -10,8 +9,8 @@ import { DATA_KEYS, NAV_STATES, subscribeTo } from '../state';
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
-    marginRight: theme.spacing(2)
-  }  
+    marginRight: theme.spacing(2),
+  },
 }));
 
 const MeansToolbar = ({ onMenuClick, onNavBack }) => {
@@ -19,7 +18,7 @@ const MeansToolbar = ({ onMenuClick, onNavBack }) => {
 
   const [appBarState, setAppBarState] = React.useState({
     title: '',
-    navState: ''
+    navState: '',
   });
 
   React.useEffect(() => {

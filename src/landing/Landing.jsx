@@ -15,29 +15,27 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Build from '@material-ui/icons/Build';
 import Face from '@material-ui/icons/Face';
 import Drawer from '@material-ui/core/Drawer';
-import Container from '@material-ui/core/Container';
 
-import { Clients } from '../clients';
-import { ClientDetail } from '../partial';
 import { Jobs } from '../jobs';
-import { JobDetail, MeansToolbar } from '../partial';
+import { Clients } from '../clients';
+import { ClientDetail, JobDetail, MeansToolbar, MainActions } from '../partial';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
   },
   drawer: {
     width: drawerWidth,
-    flexShrink: 0
+    flexShrink: 0,
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
   },
   drawerHeader: {
     display: 'flex',
@@ -45,21 +43,21 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
-    justifyContent: 'flex-end'
-  }
+    justifyContent: 'flex-end',
+  },
 }));
 
 const links = [
   {
     title: 'Jobs',
     url: '/jobs',
-    icon: <Build></Build>
+    icon: <Build></Build>,
   },
   {
     title: 'Clients',
     url: '/clients',
-    icon: <Face></Face>
-  }
+    icon: <Face></Face>,
+  },
 ];
 
 const Landing = () => {
@@ -91,7 +89,7 @@ const Landing = () => {
         anchor='left'
         open={open}
         classes={{
-          paper: classes.drawerPaper
+          paper: classes.drawerPaper,
         }}>
         <div className={classes.drawerHeader}>
           <IconButton onClick={toggleDrawer}>
@@ -121,6 +119,7 @@ const Landing = () => {
           <Route exact path='/clients'>
             <Clients></Clients>
           </Route>
+
           <Route exact path='/clients/:id/detail'>
             <ClientDetail></ClientDetail>
           </Route>
@@ -132,6 +131,7 @@ const Landing = () => {
           </Route>
         </Switch>
       </main>
+      <MainActions />
     </div>
   );
 };

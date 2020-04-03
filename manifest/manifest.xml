@@ -4,7 +4,7 @@
   <Version>1.0.0.0</Version>
   <ProviderName>Stardubb</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="CRP Cash Flow" />
+  <DisplayName DefaultValue="Means" />
   <Description DefaultValue="Cash flow tracker" />
   <IconUrl DefaultValue="https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/money_envelope_add.png" />
   <SupportUrl DefaultValue="https://www.google.com" />

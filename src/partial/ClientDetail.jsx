@@ -2,11 +2,16 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 // import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import { publishTo, DATA_KEYS, NAV_STATES, selectClient } from '../state';
 
-const useStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles((theme) => ({
+  cancel: {
+    marginLeft: theme.spacing(2),
+  },
+}));
 
 const ClientDetail = () => {
   const classes = useStyles();
@@ -15,7 +20,7 @@ const ClientDetail = () => {
 
   publishTo(DATA_KEYS.APP_BAR, {
     title: `Edit Client`,
-    navState: NAV_STATES.BACK
+    navState: NAV_STATES.BACK,
   });
 
   return (
@@ -98,6 +103,17 @@ const ClientDetail = () => {
               value={clientForm.location.zip}
               fullWidth
             />
+          </Grid>
+          <Grid item xs={12}>
+            <Button variant='contained' color='primary'>
+              Save
+            </Button>
+            <Button
+              variant='contained'
+              color='secondary'
+              className={classes.cancel}>
+              Cancel
+            </Button>
           </Grid>
         </Grid>
       </Grid>

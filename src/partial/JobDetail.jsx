@@ -1,18 +1,23 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import {
   publishTo,
   DATA_KEYS,
   NAV_STATES,
   useClients,
-  selectJob
+  selectJob,
 } from '../state';
 
-const useStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles((theme) => ({
+  cancel: {
+    marginLeft: theme.spacing(2),
+  },
+}));
 
 const JobDetail = () => {
   const classes = useStyles();
@@ -22,7 +27,7 @@ const JobDetail = () => {
 
   publishTo(DATA_KEYS.APP_BAR, {
     title: `Edit Job`,
-    navState: NAV_STATES.BACK
+    navState: NAV_STATES.BACK,
   });
 
   const onClientChange = (client, reason) => {
@@ -106,6 +111,14 @@ const JobDetail = () => {
               value={jobForm.location.zip}
               fullWidth
             />
+          </Grid>
+          <Grid item xs={12}>
+            <Button variant='contained' color='primary'>
+              Save
+            </Button>
+            <Button variant='contained' color='secondary' className={classes.cancel}>
+              Cancel
+            </Button>
           </Grid>
         </Grid>
       </Grid>

@@ -6,12 +6,13 @@ import { BehaviorSubject } from 'rxjs';
 export const keys = {
   APP_BAR: 'APP_BAR',
   CLIENTS: 'CLIENTS',
-  JOBS: 'JOBS'
+  JOBS: 'JOBS',
+  ACTION_BAR: 'ACTION_BAR',
 };
 
 export const appBarNav = {
   MENU: 'MENU',
-  BACK: 'BACK'
+  BACK: 'BACK',
 };
 
 export const state = {};
@@ -19,7 +20,22 @@ export const state = {};
 // UI STATE
 state[keys.APP_BAR] = new BehaviorSubject({
   title: 'Means',
-  navState: appBarNav.MENU
+  navState: appBarNav.MENU,
+  actionBar: {
+    onAdd: null,
+    onDelete: null,
+    enableAdd: true,
+    enableDelete: true,
+    enableReset: true,
+  },
+});
+
+state[keys.ACTION_BAR] = new BehaviorSubject({
+  onAdd: null,
+  onDelete: null,
+  enableAdd: true,
+  enableDelete: false,
+  enableReset: false,
 });
 
 // DATA STATE
@@ -33,8 +49,8 @@ state[keys.CLIENTS] = new BehaviorSubject([
       addressTwo: '',
       city: '',
       state: '',
-      zip: ''
-    }
+      zip: '',
+    },
   },
   {
     id: 2,
@@ -45,9 +61,9 @@ state[keys.CLIENTS] = new BehaviorSubject([
       addressTwo: '',
       city: '',
       state: '',
-      zip: ''
-    }
-  }
+      zip: '',
+    },
+  },
 ]);
 
 state[keys.JOBS] = new BehaviorSubject([
@@ -56,31 +72,31 @@ state[keys.JOBS] = new BehaviorSubject([
     title: 'This Old House',
     client: {
       firstName: 'Bob',
-      lastName: 'Vila'
+      lastName: 'Vila',
     },
     location: {
       addressOne: '21 Jump St.',
       addressTwo: '',
       city: '',
       state: '',
-      zip: ''
-    }
+      zip: '',
+    },
   },
   {
     id: 2,
     title: 'Tool Time',
     client: {
       firstName: 'Tim',
-      lastName: 'Taylor'
+      lastName: 'Taylor',
     },
     location: {
       addressOne: '123 Sesame St.',
       addressTwo: '',
       city: '',
       state: '',
-      zip: ''
-    }
-  }
+      zip: '',
+    },
+  },
 ]);
 
 export const publish = (key, data) => {
