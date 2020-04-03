@@ -25,7 +25,7 @@ const Clients = (props) => {
         return (
           <React.Fragment key={index}>
             {index > 0 && <Divider variant='inset' component='li'></Divider>}
-            <ClientItem job={client} onSelected={onClientSelected}></ClientItem>
+            <ClientItem client={client} onSelected={onClientSelected}></ClientItem>
           </React.Fragment>
         );
       })}

@@ -17,7 +17,7 @@ import Face from '@material-ui/icons/Face';
 import Drawer from '@material-ui/core/Drawer';
 
 import { Clients } from '../clients';
-// import { JobDetail } from '../partial';
+import { ClientDetail } from '../partial';
 import { Jobs } from '../jobs';
 import { JobDetail, MeansToolbar } from '../partial';
 
@@ -119,6 +119,9 @@ const Landing = () => {
           </Route>
           <Route exact path='/clients'>
             <Clients></Clients>
+          </Route>
+          <Route exact path='/clients/:id/detail'>
+            <ClientDetail></ClientDetail>
           </Route>
           <Route exact path='/jobs'>
             <Jobs></Jobs>
