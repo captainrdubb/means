@@ -11,6 +11,7 @@ import {
   NAV_STATES,
   useClients,
   selectJob,
+  saveJob,
 } from '../state';
 
 const useStyles = makeStyles((theme) => ({
@@ -24,7 +25,14 @@ const JobDetail = () => {
   const history = useHistory();
   const clients = useClients();
   const { id } = useParams();
-  const [jobForm, setJobForm] = React.useState({ ...selectJob(id) });
+  const job = selectJob(id);
+  const [title, setTitle] = React.useState(job.title);
+  const [client, setClient] = React.useState(job.client);
+  const [addressOne, setAddressOne] = React.useState(job.location.addressOne);
+  const [addressTwo, setAddressTwo] = React.useState(job.location.addressTwo);
+  const [city, setCity] = React.useState(job.location.city);
+  const [_state, setState] = React.useState(job.location.city);
+  const [zip, setZip] = React.useState(job.location.zip);
 
   publishTo(DATA_KEYS.MEANS_TOOLBAR, {
     title: `Edit Job`,
@@ -51,6 +59,24 @@ const JobDetail = () => {
     }
   };
 
+  const onSave = (id) => {
+    const updatedJob = {
+      id,
+      title,
+      client,
+      location: {
+        addressOne,
+        addressTwo,
+        city,
+        state: _state,
+        zip,
+      },
+    };
+
+    saveJob(updatedJob);
+    history.goBack();
+  };
+
   return (
     <Grid container>
       <Grid item xs={12} md={5}>
@@ -59,7 +85,8 @@ const JobDetail = () => {
             <TextField
               id=''
               label='Description'
-              value={jobForm.title}
+              defaultValue={title}
+              onChange={({ target: { value } }) => setTitle(value)}
               fullWidth
             />
           </Grid>
@@ -70,10 +97,9 @@ const JobDetail = () => {
               options={clients}
               onChange={onClientChange}
               className={classes.client}
-              defaultValue={jobForm.client}
-              getOptionLabel={(client) =>
-                `${client.firstName} ${client.lastName}`
-              }
+              defaultValue={client}
+              onChange={({ target: { value } }) => setClient(value)}
+              getOptionLabel={(c) => `${c.firstName} ${c.lastName}`}
               renderInput={(params) => (
                 <TextField {...params} label='Client' variant='standard' />
               )}
@@ -84,7 +110,8 @@ const JobDetail = () => {
               id=''
               label='Address line 1'
               autoComplete='address-line1'
-              value={jobForm.location.addressOne}
+              defaultValue={addressOne}
+              onChange={({ target: { value } }) => setAddressOne(value)}
               fullWidth
             />
           </Grid>
@@ -93,7 +120,8 @@ const JobDetail = () => {
               id=''
               label='Address line 2'
               autoComplete='address-line2'
-              value={jobForm.location.addressTwo}
+              defaultValue={addressTwo}
+              onChange={({ target: { value } }) => setAddressTwo(value)}
               fullWidth
             />
           </Grid>
@@ -102,7 +130,8 @@ const JobDetail = () => {
               id=''
               label='City'
               autoComplete='address-level2'
-              value={jobForm.location.city}
+              defaultValue={city}
+              onChange={({ target: { value } }) => setCity(value)}
               fullWidth
             />
           </Grid>
@@ -111,7 +140,8 @@ const JobDetail = () => {
               id=''
               label='State'
               autoComplete='address-level1'
-              value={jobForm.location.state}
+              defaultValue={_state}
+              onChange={({ target: { value } }) => setState(value)}
               fullWidth
             />
           </Grid>
@@ -120,12 +150,16 @@ const JobDetail = () => {
               id=''
               label='Zip'
               autoComplete='postal-code'
-              value={jobForm.location.zip}
+              defaultValue={zip}
+              onChange={({ target: { value } }) => setZip(value)}
               fullWidth
             />
           </Grid>
           <Grid item xs={12}>
-            <Button variant='contained' color='primary'>
+            <Button
+              onClick={() => onSave(job.id)}
+              variant='contained'
+              color='primary'>
               Save
             </Button>
             <Button
