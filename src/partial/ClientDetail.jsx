@@ -3,7 +3,6 @@ import { useParams, useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-// import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/core/styles';
 import { publishTo, DATA_KEYS, NAV_STATES, selectClient } from '../state';
 
@@ -17,7 +16,16 @@ const ClientDetail = () => {
   const classes = useStyles();
   const history = useHistory();
   const { id } = useParams();
-  const [clientForm, setClientForm] = React.useState({ ...selectClient(id) });
+  const client = selectClient(id);
+  const [firstName, setFirstName] = React.useState(client.firstName);
+  const [lastName, setLastName] = React.useState(client.lastName);
+
+  const { location } = client;
+  const [addressOne, setAddressOne] = React.useState(location.addressOne);
+  const [addressTwo, setAddressTwo] = React.useState(location.addressTwo);
+  const [city, setCity] = React.useState(location.city);
+  const [state, setState] = React.useState(location.state);
+  const [zip, setZip] = React.useState(location.zip);
 
   publishTo(DATA_KEYS.MEANS_TOOLBAR, {
     title: `Edit Client`,
@@ -27,6 +35,20 @@ const ClientDetail = () => {
   publishTo(DATA_KEYS.ACTION_FAB, {
     hide: true,
   });
+
+  const onSave = () => {
+    const updatedClient = {
+      firstName,
+      lastName,
+      location: {
+        addressOne,
+        addressTwo,
+        city,
+        state,
+        zip,
+      },
+    };
+  };
 
   const onCancel = () => {
     publishTo(DATA_KEYS.ACTION_FAB, {
@@ -42,41 +64,28 @@ const ClientDetail = () => {
           <Grid item xs={12} sm={6}>
             <TextField
               id=''
-              label='Description'
-              value={clientForm.firstName}
+              label='First Name'
+              defaultValue={firstName}
+              onChange={({ target: value }) => setFirstName(value)}
               fullWidth
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               id=''
-              label='Description'
-              value={clientForm.lastName}
+              label='Last Name'
+              defaultValue={lastName}
+              onChange={({ target: value }) => setLastName(value)}
               fullWidth
             />
           </Grid>
-          {/* <Grid item xs={12} sm={6}>
-          <Autocomplete
-            id=''
-            fullWidth
-            options={clients}
-            onChange={onClientChange}
-            className={classes.client}
-            defaultValue={jobForm.client}
-            getOptionLabel={(client) =>
-              `${client.firstName} ${client.lastName}`
-            }
-            renderInput={(params) => (
-              <TextField {...params} label='Client' variant='standard' />
-            )}
-          />
-        </Grid> */}
           <Grid item xs={12}>
             <TextField
               id=''
               label='Address line 1'
               autoComplete='address-line1'
-              value={clientForm.location.addressOne}
+              defaultValue={addressOne}
+              onChange={({ target: value }) => setAddressOne(value)}
               fullWidth
             />
           </Grid>
@@ -85,7 +94,8 @@ const ClientDetail = () => {
               id=''
               label='Address line 2'
               autoComplete='address-line2'
-              value={clientForm.location.addressTwo}
+              defaultValue={addressTwo}
+              onChange={({ target: value }) => setAddressTwo(value)}
               fullWidth
             />
           </Grid>
@@ -94,7 +104,8 @@ const ClientDetail = () => {
               id=''
               label='City'
               autoComplete='address-level2'
-              value={clientForm.location.city}
+              defaultValue={city}
+              onChange={({ target: value }) => setCity(value)}
               fullWidth
             />
           </Grid>
@@ -103,7 +114,8 @@ const ClientDetail = () => {
               id=''
               label='State'
               autoComplete='address-level1'
-              value={clientForm.location.state}
+              defaultValue={state}
+              onChange={({ target: value }) => setState(value)}
               fullWidth
             />
           </Grid>
@@ -112,12 +124,13 @@ const ClientDetail = () => {
               id=''
               label='Zip'
               autoComplete='postal-code'
-              value={clientForm.location.zip}
+              defaultValue={zip}
+              onChange={({ target: value }) => setZip(value)}
               fullWidth
             />
           </Grid>
           <Grid item xs={12}>
-            <Button variant='contained' color='primary'>
+            <Button onClick={onSave} variant='contained' color='primary'>
               Save
             </Button>
             <Button

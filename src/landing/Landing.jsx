@@ -14,6 +14,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Build from '@material-ui/icons/Build';
 import Face from '@material-ui/icons/Face';
+import LocalAtmIcon from '@material-ui/icons/LocalAtm';
+import ReceiptIcon from '@material-ui/icons/Receipt';
 import Drawer from '@material-ui/core/Drawer';
 
 import { Jobs } from '../jobs';
@@ -48,6 +50,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const links = [
+  {
+    title: 'Income',
+    url: '/income',
+    icon: <LocalAtmIcon></LocalAtmIcon>,
+  },
+  {
+    title: 'Expenses',
+    url: '/expenses',
+    icon: <ReceiptIcon></ReceiptIcon>,
+  },
   {
     title: 'Jobs',
     url: '/jobs',
