@@ -137,6 +137,9 @@ const Landing = () => {
           <Route exact path='/jobs'>
             <Jobs></Jobs>
           </Route>
+          <Route exact path='/jobs/create'>
+            <JobDetail></JobDetail>
+          </Route>
           <Route exact path='/jobs/:id/detail'>
             <JobDetail></JobDetail>
           </Route>

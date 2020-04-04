@@ -25,7 +25,8 @@ const JobDetail = () => {
   const history = useHistory();
   const clients = useClients();
   const { id } = useParams();
-  const job = selectJob(id);
+
+  const job = selectJob(id) || { location: {} };
   const [title, setTitle] = React.useState(job.title);
   const [client, setClient] = React.useState(job.client);
   const [addressOne, setAddressOne] = React.useState(job.location.addressOne);
@@ -44,9 +45,6 @@ const JobDetail = () => {
   });
 
   const onCancel = () => {
-    publishTo(DATA_KEYS.ACTION_FAB, {
-      hide: false,
-    });
     history.goBack();
   };
 
@@ -98,7 +96,7 @@ const JobDetail = () => {
               onChange={onClientChange}
               className={classes.client}
               defaultValue={client}
-              onChange={({ target: { value } }) => setClient(value)}
+              onChange={(event, value) => setClient(value)}
               getOptionLabel={(c) => `${c.firstName} ${c.lastName}`}
               renderInput={(params) => (
                 <TextField {...params} label='Client' variant='standard' />

@@ -60,9 +60,6 @@ const ClientDetail = () => {
   };
 
   const onCancel = () => {
-    publishTo(DATA_KEYS.ACTION_FAB, {
-      hide: false,
-    });
     history.goBack();
   };
 

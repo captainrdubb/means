@@ -10,12 +10,20 @@ import { publishTo, DATA_KEYS, useClients, NAV_STATES } from '../state';
 const useStyles = makeStyles((theme) => ({}));
 
 const Clients = (props) => {
-  publishTo(DATA_KEYS.MEANS_TOOLBAR, { title: 'Clients', navState: NAV_STATES.MENU });
-
   const classes = useStyles();
   const history = useHistory();
-
   const clients = useClients();
+
+  publishTo(DATA_KEYS.MEANS_TOOLBAR, {
+    title: 'Clients',
+    navState: NAV_STATES.MENU,
+  });
+
+  publishTo(DATA_KEYS.ACTION_FAB, {
+    hide: false,
+    onAdd: () => history.push('/clients/create'),
+  });
+
   const onClientSelected = (client) =>
     history.push(`/clients/${client.id}/detail`);
 
@@ -25,7 +33,9 @@ const Clients = (props) => {
         return (
           <React.Fragment key={index}>
             {index > 0 && <Divider variant='inset' component='li'></Divider>}
-            <ClientItem client={client} onSelected={onClientSelected}></ClientItem>
+            <ClientItem
+              client={client}
+              onSelected={onClientSelected}></ClientItem>
           </React.Fragment>
         );
       })}

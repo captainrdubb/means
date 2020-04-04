@@ -23,14 +23,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const actions = [
-  { icon: <AddIcon />, name: 'Client' },
+  { icon: <AddIcon />, name: 'Add' },
   { icon: <DeleteIcon />, name: 'Remove' },
   { icon: <AssessmentIcon />, name: 'Report' },
 ];
 
 const MainActions = () => {
   const classes = useStyles();
-  const [direction, setDirection] = React.useState('up');
   const [open, setOpen] = React.useState(false);
   const [fabState, setFabState] = React.useState({ hide: false });
 
@@ -38,6 +37,14 @@ const MainActions = () => {
     const subscription = subscribeTo(DATA_KEYS.ACTION_FAB, setFabState);
     return () => subscription.unsubscribe();
   }, []);
+
+  const onActionClick = (action) => {
+    switch (action.name) {
+      default:
+        if (fabState.onAdd) fabState.onAdd();
+    }
+    handleClose();
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -56,13 +63,13 @@ const MainActions = () => {
       onClose={handleClose}
       onOpen={handleOpen}
       open={open}
-      direction={direction}>
+      direction='up'>
       {actions.map((action) => (
         <SpeedDialAction
           key={action.name}
           icon={action.icon}
           tooltipTitle={action.name}
-          onClick={handleClose}
+          onClick={() => onActionClick(action)}
         />
       ))}
     </SpeedDial>

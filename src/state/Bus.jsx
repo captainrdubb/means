@@ -30,7 +30,7 @@ state[keys.MEANS_TOOLBAR] = new BehaviorSubject({
   },
 });
 
-state[keys.ACTION_FAB] = new BehaviorSubject({ hide: false });
+state[keys.ACTION_FAB] = new BehaviorSubject({ hide: false, onAdd: null });
 
 // DATA STATE
 state[keys.CLIENTS] = new BehaviorSubject([
