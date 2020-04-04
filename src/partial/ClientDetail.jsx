@@ -4,7 +4,13 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import { publishTo, DATA_KEYS, NAV_STATES, selectClient } from '../state';
+import {
+  publishTo,
+  DATA_KEYS,
+  NAV_STATES,
+  selectClient,
+  saveClient,
+} from '../state';
 
 const useStyles = makeStyles((theme) => ({
   cancel: {
@@ -36,8 +42,9 @@ const ClientDetail = () => {
     hide: true,
   });
 
-  const onSave = () => {
+  const onSave = (id) => {
     const updatedClient = {
+      id,
       firstName,
       lastName,
       location: {
@@ -48,6 +55,8 @@ const ClientDetail = () => {
         zip,
       },
     };
+    saveClient(updatedClient);
+    history.push('/clients');
   };
 
   const onCancel = () => {
@@ -66,7 +75,7 @@ const ClientDetail = () => {
               id=''
               label='First Name'
               defaultValue={firstName}
-              onChange={({ target: value }) => setFirstName(value)}
+              onChange={({ target: { value } }) => setFirstName(value)}
               fullWidth
             />
           </Grid>
@@ -75,7 +84,7 @@ const ClientDetail = () => {
               id=''
               label='Last Name'
               defaultValue={lastName}
-              onChange={({ target: value }) => setLastName(value)}
+              onChange={({ target: { value } }) => setLastName(value)}
               fullWidth
             />
           </Grid>
@@ -85,7 +94,7 @@ const ClientDetail = () => {
               label='Address line 1'
               autoComplete='address-line1'
               defaultValue={addressOne}
-              onChange={({ target: value }) => setAddressOne(value)}
+              onChange={({ target: { value } }) => setAddressOne(value)}
               fullWidth
             />
           </Grid>
@@ -95,7 +104,7 @@ const ClientDetail = () => {
               label='Address line 2'
               autoComplete='address-line2'
               defaultValue={addressTwo}
-              onChange={({ target: value }) => setAddressTwo(value)}
+              onChange={({ target: { value } }) => setAddressTwo(value)}
               fullWidth
             />
           </Grid>
@@ -105,7 +114,7 @@ const ClientDetail = () => {
               label='City'
               autoComplete='address-level2'
               defaultValue={city}
-              onChange={({ target: value }) => setCity(value)}
+              onChange={({ target: { value } }) => setCity(value)}
               fullWidth
             />
           </Grid>
@@ -115,7 +124,7 @@ const ClientDetail = () => {
               label='State'
               autoComplete='address-level1'
               defaultValue={state}
-              onChange={({ target: value }) => setState(value)}
+              onChange={({ target: { value } }) => setState(value)}
               fullWidth
             />
           </Grid>
@@ -125,12 +134,15 @@ const ClientDetail = () => {
               label='Zip'
               autoComplete='postal-code'
               defaultValue={zip}
-              onChange={({ target: value }) => setZip(value)}
+              onChange={({ target: { value } }) => setZip(value)}
               fullWidth
             />
           </Grid>
           <Grid item xs={12}>
-            <Button onClick={onSave} variant='contained' color='primary'>
+            <Button
+              onClick={() => onSave(client.id)}
+              variant='contained'
+              color='primary'>
               Save
             </Button>
             <Button

@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
 
 const JobDetail = () => {
   const classes = useStyles();
-  const clients = useClients();
   const history = useHistory();
+  const clients = useClients();
   const { id } = useParams();
   const [jobForm, setJobForm] = React.useState({ ...selectJob(id) });
 
