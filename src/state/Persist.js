@@ -28,15 +28,17 @@ export const saveJob = (job) => {
 export const saveClient = (client) => {
   new Promise((resolve, reject) => {
     try {
-      const temp = [];
       const clients = state[keys.CLIENTS].getValue();
       if (!client.id) {
-        temp.push(client);
-      } else {
-        for (let i in clients) {
-          if (clients[i].id === client.id) temp.push(client);
-          else temp.push(clients[i]);
-        }
+        clients.push(client);
+        publish(keys.CLIENTS, clients);
+        resolve();
+      }
+
+      const temp = [];
+      for (let i in clients) {
+        if (clients[i].id === client.id) temp.push(client);
+        else temp.push(clients[i]);
       }
       publish(keys.CLIENTS, temp);
       resolve();

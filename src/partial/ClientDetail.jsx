@@ -22,7 +22,7 @@ const ClientDetail = () => {
   const classes = useStyles();
   const history = useHistory();
   const { id } = useParams();
-  const client = selectClient(id);
+  const client = selectClient(id) || { location: {} };
   const [firstName, setFirstName] = React.useState(client.firstName);
   const [lastName, setLastName] = React.useState(client.lastName);
 
