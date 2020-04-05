@@ -8,3 +8,5 @@ export { selectJob } from './Read';
 export { selectClient } from './Read';
 export { saveJob } from './Persist';
 export { saveClient } from './Persist';
+export { deleteClients } from './Persist';
+export { deleteJobs } from './Persist';

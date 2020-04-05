@@ -25,6 +25,23 @@ export const saveJob = (job) => {
   });
 };
 
+export const deleteJobs = (ids) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const temp = [];
+      const jobs = state[keys.JOBS].getValue();
+      jobs.forEach((job) => {
+        if (!ids.includes(job.id)) temp.push(job);
+      });
+      publish(keys.JOBS, temp);
+      resolve();
+    } catch (error) {
+      console.error(error);
+      reject();
+    }
+  });
+};
+
 export const saveClient = (client) => {
   new Promise((resolve, reject) => {
     try {
@@ -40,6 +57,23 @@ export const saveClient = (client) => {
         if (clients[i].id === client.id) temp.push(client);
         else temp.push(clients[i]);
       }
+      publish(keys.CLIENTS, temp);
+      resolve();
+    } catch (error) {
+      console.error(error);
+      reject();
+    }
+  });
+};
+
+export const deleteClients = (ids) => {
+  return new Promise((resolve, reject) => {
+    try {
+      const temp = [];
+      const clients = state[keys.CLIENTS].getValue();
+      clients.forEach((client) => {
+        if (!ids.includes(client.id)) temp.push(client);
+      });
       publish(keys.CLIENTS, temp);
       resolve();
     } catch (error) {

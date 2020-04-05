@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 
 import { JobItem } from '../partial';
-import { publishTo, DATA_KEYS, NAV_STATES, useJobs } from '../state';
+import { publishTo, DATA_KEYS, NAV_STATES, useJobs, deleteJobs } from '../state';
 
 const useStyles = makeStyles((theme) => ({}));
 
@@ -19,17 +19,27 @@ export default () => {
     title: 'Jobs',
     navState: NAV_STATES.MENU,
   });
-  
+
   publishTo(DATA_KEYS.ACTION_FAB, {
     hide: false,
     onAdd: () => history.push('/jobs/create'),
+    onDelete: () => onDelete(),
   });
+
+  const onDelete = () => {
+    deleteJobs(selected).then(() => setSelected([]));
+    publishTo(DATA_KEYS.ACTION_FAB, { promptUser: false });
+  };
 
   const onSelected = ({ id }) => {
     const s = [...selected];
     const index = s.findIndex((s) => s == id);
-    if (index < 0) s.splice(index, 1);
+    if (index > -1) s.splice(index, 1);
     else s.push(id);
+
+    if (s.length) publishTo(DATA_KEYS.ACTION_FAB, { promptUser: true });
+    else publishTo(DATA_KEYS.ACTION_FAB, { promptUser: false });
+
     setSelected(s);
   };
 

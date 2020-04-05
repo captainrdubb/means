@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
@@ -9,6 +10,9 @@ import AssessmentIcon from '@material-ui/icons/Assessment';
 import { DATA_KEYS, subscribeTo } from '../state';
 
 const useStyles = makeStyles((theme) => ({
+  prompt: {
+    border: `2.75px solid ${theme.palette.secondary.main}`,
+  },
   speedDial: {
     position: 'absolute',
     '&.MuiSpeedDial-directionUp, &.MuiSpeedDial-directionLeft': {
@@ -31,7 +35,7 @@ const actions = [
 const MainActions = () => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [fabState, setFabState] = React.useState({ hide: false });
+  const [fabState, setFabState] = React.useState({});
 
   React.useEffect(() => {
     const subscription = subscribeTo(DATA_KEYS.ACTION_FAB, setFabState);
@@ -40,8 +44,10 @@ const MainActions = () => {
 
   const onActionClick = (action) => {
     switch (action.name) {
-      default:
+      case 'Add':
         if (fabState.onAdd) fabState.onAdd();
+      case 'Remove':
+        if (fabState.onDelete) fabState.onDelete();
     }
     handleClose();
   };
@@ -56,6 +62,9 @@ const MainActions = () => {
 
   return (
     <SpeedDial
+      FabProps={{
+        classes: { root: clsx({ [classes.prompt]: fabState.promptUser }) },
+      }}
       ariaLabel='SpeedDial example'
       className={classes.speedDial}
       hidden={fabState.hide}

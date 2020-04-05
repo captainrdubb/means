@@ -30,7 +30,12 @@ state[keys.MEANS_TOOLBAR] = new BehaviorSubject({
   },
 });
 
-state[keys.ACTION_FAB] = new BehaviorSubject({ hide: false, onAdd: null });
+state[keys.ACTION_FAB] = new BehaviorSubject({
+  hide: false,
+  onAdd: null,
+  onDelete: null,
+  promptUser: false,
+});
 
 // DATA STATE
 state[keys.CLIENTS] = new BehaviorSubject([
@@ -94,7 +99,9 @@ state[keys.JOBS] = new BehaviorSubject([
 ]);
 
 export const publish = (key, data) => {
-  state[key].next(data);
+  let s = state[key].getValue();
+  if (Array.isArray(s)) state[key].next(data);
+  else state[key].next({ ...s, ...data });
 };
 
 export const subscribe = (key, callback) => {
