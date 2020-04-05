@@ -22,10 +22,27 @@ const Clients = (props) => {
   publishTo(DATA_KEYS.ACTION_FAB, {
     hide: false,
     onAdd: () => history.push('/clients/create'),
+    onDelete: () => onDelete(),
   });
 
-  const onClientSelected = (client) =>
-    history.push(`/clients/${client.id}/detail`);
+  const onDelete = () => {
+    deleteClients(selected).then(() => setSelected([]));
+    publishTo(DATA_KEYS.ACTION_FAB, { promptUser: false });
+  };
+
+  const onSelected = ({ id }) => {
+    const s = [...selected];
+    const index = s.findIndex((s) => s == id);
+    if (index > -1) s.splice(index, 1);
+    else s.push(id);
+
+    if (s.length) publishTo(DATA_KEYS.ACTION_FAB, { promptUser: true });
+    else publishTo(DATA_KEYS.ACTION_FAB, { promptUser: false });
+
+    setSelected(s);
+  };
+
+  const onEdit = (client) => history.push(`/clients/${client.id}/detail`);
 
   return (
     <List>
@@ -33,9 +50,7 @@ const Clients = (props) => {
         return (
           <React.Fragment key={index}>
             {index > 0 && <Divider variant='inset' component='li'></Divider>}
-            <ClientItem
-              client={client}
-              onSelected={onClientSelected}></ClientItem>
+            <ClientItem client={client} onEdit={onEdit}></ClientItem>
           </React.Fragment>
         );
       })}

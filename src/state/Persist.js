@@ -6,6 +6,7 @@ export const saveJob = (job) => {
       const jobs = state[keys.JOBS].getValue();
 
       if (!job.id) {
+        job.id = Math.round(Math.random() * (1000000 - 1) + 1);
         jobs.push(job);
         publish(keys.JOBS, jobs);
         resolve();

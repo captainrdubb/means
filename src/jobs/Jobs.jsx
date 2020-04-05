@@ -3,9 +3,17 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
+import sortedIndex from 'lodash.sortedindex';
+import sortedIndexOf from 'lodash.sortedindexof';
 
 import { JobItem } from '../partial';
-import { publishTo, DATA_KEYS, NAV_STATES, useJobs, deleteJobs } from '../state';
+import {
+  publishTo,
+  DATA_KEYS,
+  NAV_STATES,
+  useJobs,
+  deleteJobs,
+} from '../state';
 
 const useStyles = makeStyles((theme) => ({}));
 
@@ -31,16 +39,25 @@ export default () => {
     publishTo(DATA_KEYS.ACTION_FAB, { promptUser: false });
   };
 
-  const onSelected = ({ id }) => {
-    const s = [...selected];
-    const index = s.findIndex((s) => s == id);
-    if (index > -1) s.splice(index, 1);
-    else s.push(id);
+  const isChecked = ({ id }) => {
+    return sortedIndexOf(selected, id) > -1;
+  };
 
-    if (s.length) publishTo(DATA_KEYS.ACTION_FAB, { promptUser: true });
+  const toggleChecked = ({ id }) => {
+    let temp = [...selected];
+
+    let indexOf = sortedIndexOf(temp, id);
+    let index = null;
+
+    if (indexOf > -1) temp.splice(index, 1);
+    else index = sortedIndex(temp, id);
+
+    if (index !== null) temp.splice(index, 0, id);
+
+    if (temp.length) publishTo(DATA_KEYS.ACTION_FAB, { promptUser: true });
     else publishTo(DATA_KEYS.ACTION_FAB, { promptUser: false });
 
-    setSelected(s);
+    setSelected(temp);
   };
 
   const onEdit = (job) => history.push(`/jobs/${job.id}/detail`);
@@ -54,7 +71,8 @@ export default () => {
             <JobItem
               job={job}
               onEdit={onEdit}
-              onSelected={onSelected}></JobItem>
+              toggleChecked={toggleChecked}
+              checked={isChecked(job)}></JobItem>
           </React.Fragment>
         );
       })}
