@@ -37,13 +37,13 @@ export const clientsHook = () => {
   return clients;
 };
 
-export const transactionsHook = () => {
-  const [transactions, setTransactions] = useState([]);
+export const activitiesHook = () => {
+  const [activities, setActivities] = useState([]);
 
   useEffect(() => {
-    const subscription = subscribe(keys.TRANSACTIONS, setTransactions);
+    const subscription = subscribe(keys.ACTIVITY, setActivities);
     return () => subscription.unsubscribe();
   }, []);
 
-  return transactions;
+  return activities;
 };

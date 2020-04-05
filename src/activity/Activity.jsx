@@ -10,16 +10,16 @@ import {
   publishTo,
   DATA_KEYS,
   NAV_STATES,
-  useTransactions,
-  deleteTransactions,
+  useActivity,
+  deleteActivity,
 } from '../state';
 
 const useStyles = makeStyles((theme) => ({}));
 
-const Expenses = () => {
+const Activity = () => {
   const classes = useStyles();
   const history = useHistory();
-  const transactions = useTransactions();
+  const transactions = useActivity();
   const [selected, setSelected] = React.useState([]);
 
   publishTo(DATA_KEYS.MEANS_TOOLBAR, {
@@ -29,12 +29,14 @@ const Expenses = () => {
 
   publishTo(DATA_KEYS.ACTION_FAB, {
     hide: false,
-    onAdd: () => history.push('/transactions/create'),
+    onAdd: () => history.push('/activity/create'),
     onDelete: () => onDelete(),
   });
 
+  const onEdit = (transaction) => history.push(`/activity/${transaction.id}/detail`);
+
   const onDelete = () => {
-    deleteTransactions(selected).then(() => setSelected([]));
+    deleteActivity(selected).then(() => setSelected([]));
     publishTo(DATA_KEYS.ACTION_FAB, { promptUser: false });
   };
 
@@ -66,7 +68,7 @@ const Expenses = () => {
           <React.Fragment key={index}>
             {index > 0 && <Divider variant='inset' component='li'></Divider>}
             <TransactionItem
-              expense={transaction}
+              transaction={transaction}
               onEdit={onEdit}
               toggleChecked={toggleChecked}
               checked={isChecked(transaction)}></TransactionItem>
@@ -77,4 +79,4 @@ const Expenses = () => {
   );
 };
 
-export default Expenses;
+export default Activity;

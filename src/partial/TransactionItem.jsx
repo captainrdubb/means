@@ -5,19 +5,51 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Checkbox from '@material-ui/core/Checkbox';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ForwardIcon from '@material-ui/icons/Forward';
 import { abbreviation } from '../utils/nameAbbreviation';
 import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import { red } from '@material-ui/core/colors';
+
+const useStyles = makeStyles((theme) => ({
+  in: {
+    color: 'rgb(63, 181, 94)',
+  },
+  out: {
+    color: theme.palette.secondary.main,
+    transform: 'rotate(-180deg)',
+  },
+}));
 
 const TransactionItem = ({ transaction, onEdit }) => {
-  const { transactionDate, id, amount } = transaction;
+  const classes = useStyles();
+  const {
+    transactionDate,
+    transactionType,
+    id,
+    amount,
+    details: { description },
+  } = transaction;
   const [checked, setChecked] = React.useState(false);
 
   return (
     <ListItem key={id} button onClick={() => onEdit(transaction)}>
       <ListItemIcon>
-        <Avatar>{abbreviation(firstName, lastName)}</Avatar>
+        {transactionType === 'Payment' ? (
+          <ForwardIcon className={classes.in}></ForwardIcon>
+        ) : (
+          <ForwardIcon className={classes.out}></ForwardIcon>
+        )}
       </ListItemIcon>
-      <ListItemText primary={`${firstName} ${lastName}`}></ListItemText>
+      <ListItemText
+        primary={description}
+        secondary={
+          <React.Fragment>
+            <Typography>{amount}</Typography> - 
+            <Typography>{transactionDate}</Typography>
+          </React.Fragment>
+        }></ListItemText>
       <ListItemSecondaryAction>
         <Checkbox
           checked={checked}

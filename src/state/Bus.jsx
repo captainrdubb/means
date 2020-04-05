@@ -8,7 +8,7 @@ export const keys = {
   CLIENTS: 'CLIENTS',
   JOBS: 'JOBS',
   ACTION_FAB: 'ACTION_FAB',
-  EXPENSES: 'EXPENSES',
+  ACTIVITY: 'ACTIVITY',
 };
 
 export const appBarNav = {
@@ -39,14 +39,16 @@ state[keys.ACTION_FAB] = new BehaviorSubject({
 });
 
 // DATA STATE
-state[keys.TRANSACTIONS] = new BehaviorSubject([
+state[keys.ACTIVITY] = new BehaviorSubject([
   {
     id: 1,
     transactionType: 'Payment',
-    Amount: 20.0,
+    transactionDate: new Date(),
+    amount: 20.0,
     details: {
       category: 'A',
       form: 'Cash',
+      description: 'payment',
       job: {
         id: 2,
         title: 'Tool Time',
@@ -56,7 +58,8 @@ state[keys.TRANSACTIONS] = new BehaviorSubject([
   {
     id: 2,
     transactionType: 'Reinvestment',
-    Amount: 250.0,
+    transactionDate: new Date(),
+    amount: 250.0,
     details: {
       category: 'B',
       form: 'PayPal',

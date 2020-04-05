@@ -14,12 +14,12 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Build from '@material-ui/icons/Build';
 import Face from '@material-ui/icons/Face';
-import LocalAtmIcon from '@material-ui/icons/LocalAtm';
-import ReceiptIcon from '@material-ui/icons/Receipt';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import Drawer from '@material-ui/core/Drawer';
 
 import { Jobs } from '../jobs';
 import { Clients } from '../clients';
+import { Activity } from '../activity';
 import { ClientDetail, JobDetail, MeansToolbar, MainActions } from '../partial';
 
 const drawerWidth = 240;
@@ -49,16 +49,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const links = [
+const links = [  
   {
-    title: 'Income',
-    url: '/income',
-    icon: <LocalAtmIcon></LocalAtmIcon>,
-  },
-  {
-    title: 'Expenses',
-    url: '/expenses',
-    icon: <ReceiptIcon></ReceiptIcon>,
+    title: 'Activity',
+    url: '/activity',
+    icon: <AccountBalanceIcon></AccountBalanceIcon>,
   },
   {
     title: 'Jobs',
@@ -127,6 +122,9 @@ const Landing = () => {
         <Switch>
           <Route exact path='/'>
             <Redirect to='/jobs' />
+          </Route>
+          <Route exact path='/activity'>
+            <Activity></Activity>
           </Route>
           <Route exact path='/clients'>
             <Clients></Clients>
