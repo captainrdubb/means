@@ -129,7 +129,7 @@ const Landing = () => {
         <div className={classes.drawerHeader} />
         <Switch>
           <Route exact path='/'>
-            <Redirect to='/jobs' />
+            <Redirect to='/activity' />
           </Route>
           <Route exact path='/activity'>
             <Activity></Activity>
