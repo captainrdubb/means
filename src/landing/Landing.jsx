@@ -14,7 +14,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Build from '@material-ui/icons/Build';
 import Face from '@material-ui/icons/Face';
-import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+// import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import Drawer from '@material-ui/core/Drawer';
 
 import { Jobs } from '../jobs';
@@ -60,7 +61,7 @@ const links = [
   {
     title: 'Activity',
     url: '/activity',
-    icon: <AccountBalanceIcon></AccountBalanceIcon>,
+    icon: <MonetizationOnIcon></MonetizationOnIcon>,
   },
   {
     title: 'Jobs',
