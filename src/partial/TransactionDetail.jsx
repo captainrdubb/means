@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
-import CurrencyInput from '../partial';
+import { CurrencyInput } from '../partial';
 
 import {
   publishTo,
@@ -78,13 +78,15 @@ const TransactionDetail = () => {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <TextField
-              id=''
+              id={`${id}-Amount`}
+              fullWidth
               label='Amount'
               defaultValue={amount}
+              InputLabelProps={{ disableAnimation: true }}
               onChange={({ target: { value } }) => setAmount(value)}
-              fullWidth>
-              {() => <CurrencyInput></CurrencyInput>}
-            </TextField>
+              InputProps={{
+                inputComponent: (props) => <CurrencyInput {...props} />,
+              }}></TextField>
           </Grid>
           {/* <Grid item xs={12} sm={6}>
             <Autocomplete

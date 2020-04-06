@@ -15,9 +15,19 @@ const defaultMaskOptions = {
   allowLeadingZeroes: false,
 };
 
-const CurrencyInput = ({ inputProps }) => {
+const CurrencyInput = ({ inputRef, onChange, ...other }) => {
   const mask = createNumberMask(defaultMaskOptions);
-  return <MaskedInput inputMode='numeric' mask={mask} {...inputProps} />;
+  return (
+    <MaskedInput
+      {...other}
+      ref={(ref) => {
+        inputRef(ref ? ref.inputElement : null);
+      }}
+      mask={mask}
+      placeholderChar={'\u2000'}
+      showMask
+    />
+  );
 };
 
 export default CurrencyInput;
