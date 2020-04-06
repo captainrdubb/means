@@ -3,9 +3,9 @@ import { useParams, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import NumberFormat from 'react-number-format';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Button from '@material-ui/core/Button';
+import CurrencyInput from '../partial';
 
 import {
   publishTo,
@@ -72,24 +72,6 @@ const TransactionDetail = () => {
     history.goBack();
   };
 
-  const CurrencyTextMask = (props) => {
-    const { inputRef, onChange, ...other } = props;
-
-    return (
-      <NumberFormat
-        {...other}
-        getInputRef={inputRef}
-        onValueChange={({ value }) => {
-          onChange({ target: value });
-        }}
-        thousandSeparator
-        decimalScale={2}
-        allowNegative={false}
-        prefix={'$'}
-      />
-    );
-  };
-
   return (
     <Grid container>
       <Grid item xs={12} md={5}>
@@ -100,9 +82,9 @@ const TransactionDetail = () => {
               label='Amount'
               defaultValue={amount}
               onChange={({ target: { value } }) => setAmount(value)}
-              InputProps={{ inputComponent: CurrencyTextMask }}
-              fullWidth
-            />
+              fullWidth>
+              {() => <CurrencyInput></CurrencyInput>}
+            </TextField>
           </Grid>
           {/* <Grid item xs={12} sm={6}>
             <Autocomplete
