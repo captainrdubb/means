@@ -57,13 +57,7 @@ const TransactionItem = ({ transaction, onEdit }) => {
               component='span'
               variant='body2'
               className={classes.inline}>
-              {description}
-            </Typography>
-            <Typography
-              component='span'
-              variant='body2'
-              className={classes.inline}>
-              {currencyFormat.format(amount)}
+              {description}&nbsp;{currencyFormat.format(amount)}
             </Typography>
           </React.Fragment>
         }></ListItemText>
