@@ -20,7 +20,14 @@ import Drawer from '@material-ui/core/Drawer';
 import { Jobs } from '../jobs';
 import { Clients } from '../clients';
 import { Activity } from '../activity';
-import { ClientDetail, JobDetail, MeansToolbar, MainActions } from '../partial';
+import {
+  ClientDetail,
+  JobDetail,
+  ActivityDetail,
+  MeansToolbar,
+  MainActions,
+  TransactionDetail
+} from '../partial';
 
 const drawerWidth = 240;
 
@@ -49,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const links = [  
+const links = [
   {
     title: 'Activity',
     url: '/activity',
@@ -125,6 +132,9 @@ const Landing = () => {
           </Route>
           <Route exact path='/activity'>
             <Activity></Activity>
+          </Route>
+          <Route exact path='/activity/:id/detail'>
+            <TransactionDetail></TransactionDetail>
           </Route>
           <Route exact path='/clients'>
             <Clients></Clients>

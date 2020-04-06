@@ -20,10 +20,17 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.main,
     transform: 'rotate(-180deg)',
   },
+  inline: {
+    display: 'inline',
+  },
 }));
 
 const TransactionItem = ({ transaction, onEdit }) => {
   const classes = useStyles();
+  const currencyFormat = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
   const {
     transactionDate,
     transactionType,
@@ -43,11 +50,21 @@ const TransactionItem = ({ transaction, onEdit }) => {
         )}
       </ListItemIcon>
       <ListItemText
-        primary={description}
+        primary={transactionDate.toLocaleDateString()}
         secondary={
           <React.Fragment>
-            <Typography>{amount}</Typography> - 
-            <Typography>{transactionDate}</Typography>
+            <Typography
+              component='span'
+              variant='body2'
+              className={classes.inline}>
+              {description}
+            </Typography>
+            <Typography
+              component='span'
+              variant='body2'
+              className={classes.inline}>
+              {currencyFormat.format(amount)}
+            </Typography>
           </React.Fragment>
         }></ListItemText>
       <ListItemSecondaryAction>

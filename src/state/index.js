@@ -10,5 +10,6 @@ export { saveClient } from './Persist';
 export { selectClient } from './Read';
 export { deleteClients } from './Persist';
 export { clientsHook as useClients } from './Read';
+export { selectTransaction } from './Read';
 export { deleteActivity } from './Persist';
 export { activitiesHook as useActivity } from './Read';

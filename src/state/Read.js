@@ -15,6 +15,13 @@ export const selectClient = (id) => {
   return clients[index];
 };
 
+export const selectTransaction = (id) => {
+  if (!id) return null;
+  const activity = state[keys.ACTIVITY].getValue();
+  const index = activity.findIndex((a) => a.id == id);
+  return activity[index];
+};
+
 export const jobsHook = () => {
   const [jobs, setJobs] = useState([]);
 
