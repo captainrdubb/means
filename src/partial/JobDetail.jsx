@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 const JobDetail = () => {
   const classes = useStyles();
+  const { pathname } = useLocation();
   const history = useHistory();
   const clients = useClients();
   const { id } = useParams();
@@ -35,8 +36,10 @@ const JobDetail = () => {
   const [_state, setState] = React.useState(job.location.city);
   const [zip, setZip] = React.useState(job.location.zip);
 
+  const header = pathname.match(/create/i) ? 'Create' : 'Edit';
+
   publishTo(DATA_KEYS.MEANS_TOOLBAR, {
-    title: `Edit Job`,
+    title: `${header} Job`,
     navState: NAV_STATES.BACK,
   });
 

@@ -42,31 +42,27 @@ state[keys.ACTION_FAB] = new BehaviorSubject({
 state[keys.ACTIVITY] = new BehaviorSubject([
   {
     id: 1,
-    transactionType: 'Payment',
+    category: 'Payment',
+    transactionType: 'Cash',
     transactionDate: new Date(),
     amount: 20.0,
-    details: {
-      category: 'A',
-      form: 'Cash',
-      description: 'payment',
-      job: {
-        id: 2,
-        title: 'Tool Time',
-      },
+    description: null,
+    job: {
+      id: 2,
+      title: 'Tool Time',
     },
   },
   {
     id: 2,
-    transactionType: 'Reinvestment',
+    category: 'Reinvestment',
     transactionDate: new Date(),
+    transactionType: 'Online',
+    transactionService: 'PayPal',
     amount: 250.0,
-    details: {
-      category: 'B',
-      form: 'PayPal',
-      job: null,
-      description: 'table saw',
-      to: 'Bill Bowers',
-    },
+    account: 'B',
+    description: 'table saw',
+    recipient: 'Bill Bowers',
+    job: null,
   },
 ]);
 

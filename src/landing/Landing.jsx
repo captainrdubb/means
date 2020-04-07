@@ -27,7 +27,7 @@ import {
   ActivityDetail,
   MeansToolbar,
   MainActions,
-  TransactionDetail
+  TransactionDetail,
 } from '../partial';
 
 const drawerWidth = 240;
@@ -134,7 +134,10 @@ const Landing = () => {
           <Route exact path='/activity'>
             <Activity></Activity>
           </Route>
-          <Route exact path='/activity/:id/detail'>
+          <Route exact path='/activity/create'>
+            <TransactionDetail></TransactionDetail>
+          </Route>
+          <Route exact path='/activity/:id/edit'>
             <TransactionDetail></TransactionDetail>
           </Route>
           <Route exact path='/clients'>
@@ -143,7 +146,7 @@ const Landing = () => {
           <Route exact path='/clients/create'>
             <ClientDetail></ClientDetail>
           </Route>
-          <Route exact path='/clients/:id/detail'>
+          <Route exact path='/clients/:id/edit'>
             <ClientDetail></ClientDetail>
           </Route>
           <Route exact path='/jobs'>
@@ -152,7 +155,7 @@ const Landing = () => {
           <Route exact path='/jobs/create'>
             <JobDetail></JobDetail>
           </Route>
-          <Route exact path='/jobs/:id/detail'>
+          <Route exact path='/jobs/:id/edit'>
             <JobDetail></JobDetail>
           </Route>
         </Switch>

@@ -31,19 +31,13 @@ const TransactionItem = ({ transaction, onEdit }) => {
     style: 'currency',
     currency: 'USD',
   });
-  const {
-    transactionDate,
-    transactionType,
-    id,
-    amount,
-    details: { description },
-  } = transaction;
+  const { id, category, transactionDate, amount, description } = transaction;
   const [checked, setChecked] = React.useState(false);
 
   return (
     <ListItem key={id} button onClick={() => onEdit(transaction)}>
       <ListItemIcon>
-        {transactionType === 'Payment' ? (
+        {category === 'Payment' ? (
           <ForwardIcon className={classes.in}></ForwardIcon>
         ) : (
           <ForwardIcon className={classes.out}></ForwardIcon>

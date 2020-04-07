@@ -33,7 +33,7 @@ const Activity = () => {
     onDelete: () => onDelete(),
   });
 
-  const onEdit = (transaction) => history.push(`/activity/${transaction.id}/detail`);
+  const onEdit = (transaction) => history.push(`/activity/${transaction.id}/edit`);
 
   const onDelete = () => {
     deleteActivity(selected).then(() => setSelected([]));

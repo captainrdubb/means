@@ -42,7 +42,7 @@ const Clients = (props) => {
     setSelected(s);
   };
 
-  const onEdit = (client) => history.push(`/clients/${client.id}/detail`);
+  const onEdit = (client) => history.push(`/clients/${client.id}/edit`);
 
   return (
     <List>

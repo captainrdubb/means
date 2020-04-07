@@ -60,7 +60,7 @@ export default () => {
     setSelected(temp);
   };
 
-  const onEdit = (job) => history.push(`/jobs/${job.id}/detail`);
+  const onEdit = (job) => history.push(`/jobs/${job.id}/edit`);
 
   return (
     <List>
