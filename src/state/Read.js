@@ -44,7 +44,7 @@ export const clientsHook = () => {
   return clients;
 };
 
-export const activitiesHook = () => {
+export const transactionHook = () => {
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {

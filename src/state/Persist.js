@@ -84,7 +84,31 @@ export const deleteClients = (ids) => {
   });
 };
 
-export const deleteActivity = (ids) => {
+export const saveTransaction = (transaction) => {
+  new Promise((resolve, reject) => {
+    try {
+      const transactions = state[keys.ACTIVITY].getValue();
+      if (!transaction.id) {
+        transactions.push(transaction);
+        publish(keys.ACTIVITY, transactions);
+        resolve();
+      }
+
+      const temp = [];
+      for (let i in transactions) {
+        if (transactions[i].id === transaction.id) temp.push(transaction);
+        else temp.push(transactions[i]);
+      }
+      publish(keys.ACTIVITY, temp);
+      resolve();
+    } catch (error) {
+      console.error(error);
+      reject();
+    }
+  });
+};
+
+export const deleteTransaction = (ids) => {
   return new Promise((resolve, reject) => {
     try {
       const temp = [];

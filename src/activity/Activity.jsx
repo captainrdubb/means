@@ -10,8 +10,8 @@ import {
   publishTo,
   DATA_KEYS,
   NAV_STATES,
-  useActivity,
-  deleteActivity,
+  deleteTransaction,
+  useTransactions,
 } from '../state';
 
 const useStyles = makeStyles((theme) => ({}));
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({}));
 const Activity = () => {
   const classes = useStyles();
   const history = useHistory();
-  const transactions = useActivity();
+  const transactions = useTransactions();
   const [selected, setSelected] = React.useState([]);
 
   publishTo(DATA_KEYS.MEANS_TOOLBAR, {
@@ -36,7 +36,7 @@ const Activity = () => {
   const onEdit = (transaction) => history.push(`/activity/${transaction.id}/edit`);
 
   const onDelete = () => {
-    deleteActivity(selected).then(() => setSelected([]));
+    deleteTransaction(selected).then(() => setSelected([]));
     publishTo(DATA_KEYS.ACTION_FAB, { promptUser: false });
   };
 

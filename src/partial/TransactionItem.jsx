@@ -44,7 +44,7 @@ const TransactionItem = ({ transaction, onEdit }) => {
         )}
       </ListItemIcon>
       <ListItemText
-        primary={transactionDate.toLocaleDateString()}
+        primary={`${transactionDate}`}
         secondary={
           <React.Fragment>
             <Typography

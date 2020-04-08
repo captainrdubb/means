@@ -15,10 +15,10 @@ const defaultMaskOptions = {
   allowLeadingZeroes: false,
 };
 
-const CurrencyInput = ({ inputRef, onChange, ...other }) => {
+const CurrencyInput = ({ inputRef, ...other }) => {
   const mask = createNumberMask(defaultMaskOptions);
   return (
-    <MaskedInput
+    <MaskedInput      
       {...other}
       ref={(ref) => {
         inputRef(ref ? ref.inputElement : null);

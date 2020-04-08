@@ -4,6 +4,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 import Button from '@material-ui/core/Button';
 import { CurrencyInput } from '../partial';
 
@@ -24,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 const categories = ['Payment', 'Reinvestment', 'Materials', 'Loss'];
 
-const transactionTypes = ['Cash', 'Check', 'Online'];
+const transactionTypes = ['Cash', 'Check', 'Online', 'Asset'];
 
 //move preferred service to customer
 //give ability to change service in payment form
@@ -35,7 +40,7 @@ const TransactionDetail = () => {
   const classes = useStyles();
   const history = useHistory();
   const jobs = useJobs();
-  const { id } = useParams();
+  let { id = Number.POSITIVE_INFINITY } = useParams();
 
   // TODO CREATE ACCOUNTS SYSTEM
   const transaction = selectTransaction(id) || {};
@@ -46,8 +51,10 @@ const TransactionDetail = () => {
   const [transactionDate, setTransactionDate] = React.useState(
     transaction.transactionDate
   );
+  const [transactionService, setTransactionService] = React.useState(
+    transaction.transactionService
+  );
   const [amount, setAmount] = React.useState(transaction.amount);
-  const [recipient, setRecipient] = React.useState(transaction.recipient);
   const [description, setDescription] = React.useState(transaction.description);
   const [job, setJob] = React.useState(transaction.job);
 
@@ -68,15 +75,13 @@ const TransactionDetail = () => {
 
   const onSave = (id) => {
     const updatedTransaction = {
-      amount,
-      transactionType,
+      category,
       transactionDate,
-      details: {
-        category,
-        description,
-        form,
-        job,
-      },
+      transactionType,
+      transactionService,
+      amount,
+      description,
+      job,
     };
 
     saveTransaction(updatedTransaction);
@@ -112,27 +117,48 @@ const TransactionDetail = () => {
               )}
             />
           </Grid>
+          {transactionType === 'Online' && (
+            <Grid item sm={6} xs={12}>
+              <Autocomplete
+                id={`${id}-TransactionService`}
+                options={transactionServices}
+                onChange={(event, value) => setTransactionService(value)}
+                defaultValue={transactionService}
+                getOptionLabel={(tt) => tt}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label='Transaction Service'
+                    variant='standard'
+                  />
+                )}
+              />
+            </Grid>
+          )}
           <Grid item xs={12} sm={6}>
-            <TextField
-              id={`${id}-TransactionDate`}
-              label='Transaction Date'
-              type='date'
-              defaultValue={`${transactionDate}`}
-              onChange={({ target: { value } }) => setTransactionDate(value)}
-              InputLabelProps={{ shrink: true }}
-              fullWidth
-            />
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                margin='normal'
+                id={`${id}-TransactionDate`}
+                label='Transaction Date'
+                format='MM/dd/yyyy'
+                value={transactionDate}
+                onChange={setTransactionDate}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
+              />
+            </MuiPickersUtilsProvider>
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              id={`${id}-Amount`}
               fullWidth
+              id={`${id}-Amount`}
               label='Amount'
               defaultValue={amount}
-              InputLabelProps={{ disableAnimation: true }}
               onChange={({ target: { value } }) => setAmount(value)}
               InputProps={{
-                inputComponent: (props) => <CurrencyInput {...props} />,
+                inputComponent: CurrencyInput,
               }}></TextField>
           </Grid>
           <Grid item sm={6} xs={12}>
@@ -145,18 +171,8 @@ const TransactionDetail = () => {
             />
           </Grid>
           <Grid item sm={6} xs={12}>
-            <TextField
-              id={`${id}-Recipient`}
-              label='Recipient'
-              defaultValue={recipient}
-              onChange={({ target: { value } }) => setRecipient(value)}
-              fullWidth
-            />
-          </Grid>
-          <Grid item sm={6} xs={12}>
             <Autocomplete
               id={`${id}-Job`}
-              fullWidth
               options={jobs}
               onChange={(event, value) => setJob(value)}
               defaultValue={job}
@@ -166,16 +182,6 @@ const TransactionDetail = () => {
               )}
             />
           </Grid>
-          {/* <Grid item>
-            <TextField
-              id=''
-              label='Zip'
-              autoComplete='postal-code'
-              defaultValue={zip}
-              onChange={({ target: { value } }) => setZip(value)}
-              fullWidth
-            />
-          </Grid> */}
           <Grid item xs={12}>
             <Button
               onClick={() => onSave(transaction.id)}

@@ -44,7 +44,7 @@ state[keys.ACTIVITY] = new BehaviorSubject([
     id: 1,
     category: 'Payment',
     transactionType: 'Cash',
-    transactionDate: new Date(),
+    transactionDate: '04/08/2020',
     amount: 20.0,
     description: null,
     job: {
@@ -55,13 +55,12 @@ state[keys.ACTIVITY] = new BehaviorSubject([
   {
     id: 2,
     category: 'Reinvestment',
-    transactionDate: new Date(),
+    transactionDate: '04/08/2020',
     transactionType: 'Online',
     transactionService: 'PayPal',
     amount: 250.0,
     account: 'B',
     description: 'table saw',
-    recipient: 'Bill Bowers',
     job: null,
   },
 ]);
