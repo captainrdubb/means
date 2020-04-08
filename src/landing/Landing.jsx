@@ -18,17 +18,10 @@ import Face from '@material-ui/icons/Face';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import Drawer from '@material-ui/core/Drawer';
 
-import { Jobs } from '../jobs';
-import { Clients } from '../clients';
-import { Activity } from '../activity';
-import {
-  ClientDetail,
-  JobDetail,
-  ActivityDetail,
-  MeansToolbar,
-  MainActions,
-  TransactionDetail,
-} from '../partial';
+import { Jobs, JobDetail } from '../jobs';
+import { Clients, ClientDetail } from '../clients';
+import { Transactions, TransactionDetail } from '../transactions';
+import { MeansToolbar, MainActions } from '../partial';
 
 const drawerWidth = 240;
 
@@ -132,7 +125,7 @@ const Landing = () => {
             <Redirect to='/activity' />
           </Route>
           <Route exact path='/activity'>
-            <Activity></Activity>
+            <Transactions></Transactions>
           </Route>
           <Route exact path='/activity/create'>
             <TransactionDetail></TransactionDetail>
