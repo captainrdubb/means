@@ -47,7 +47,9 @@ export const saveClient = (client) => {
   new Promise((resolve, reject) => {
     try {
       const clients = state[keys.CLIENTS].getValue();
+      
       if (!client.id) {
+        client.id = Math.round(Math.random() * (1000000 - 1) + 1);
         clients.push(client);
         publish(keys.CLIENTS, clients);
         resolve();
@@ -88,7 +90,9 @@ export const saveTransaction = (transaction) => {
   new Promise((resolve, reject) => {
     try {
       const transactions = state[keys.ACTIVITY].getValue();
+
       if (!transaction.id) {
+        transaction.id = Math.round(Math.random() * (1000000 - 1) + 1);
         transactions.push(transaction);
         publish(keys.ACTIVITY, transactions);
         resolve();

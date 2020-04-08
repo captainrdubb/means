@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import DateFnsUtils from '@date-io/date-fns';
+import FormControl from '@material-ui/core/FormControl';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -22,6 +23,9 @@ import {
 } from '../state';
 
 const useStyles = makeStyles((theme) => ({
+  noMarginTop: {
+    marginTop: 0,
+  },
   cancel: {
     marginLeft: theme.spacing(2),
   },
@@ -40,7 +44,7 @@ const TransactionDetail = () => {
   const classes = useStyles();
   const history = useHistory();
   const jobs = useJobs();
-  let { id = Number.POSITIVE_INFINITY } = useParams();
+  let { id } = useParams();
 
   // TODO CREATE ACCOUNTS SYSTEM
   const transaction = selectTransaction(id) || {};
@@ -75,6 +79,7 @@ const TransactionDetail = () => {
 
   const onSave = (id) => {
     const updatedTransaction = {
+      id,
       category,
       transactionDate,
       transactionType,
@@ -93,6 +98,22 @@ const TransactionDetail = () => {
     <Grid container>
       <Grid item xs={12} md={5}>
         <Grid container spacing={3}>
+          <Grid item xs={12} sm={6}>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                margin='normal'
+                className={classes.noMarginTop}
+                id={`${id}-TransactionDate`}
+                label='Transaction Date'
+                format='MM/dd/yyyy'
+                value={transactionDate}
+                onChange={(date, value) => setTransactionDate(value)}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
+              />
+            </MuiPickersUtilsProvider>
+          </Grid>
           <Grid item xs={12} sm={6}>
             <Autocomplete
               id={`${id}-Category`}
@@ -135,21 +156,6 @@ const TransactionDetail = () => {
               />
             </Grid>
           )}
-          <Grid item xs={12} sm={6}>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <KeyboardDatePicker
-                margin='normal'
-                id={`${id}-TransactionDate`}
-                label='Transaction Date'
-                format='MM/dd/yyyy'
-                value={transactionDate}
-                onChange={setTransactionDate}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
-              />
-            </MuiPickersUtilsProvider>
-          </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
