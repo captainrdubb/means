@@ -16,7 +16,7 @@ import {
 
 const useStyles = makeStyles((theme) => ({}));
 
-const Activity = () => {
+const Transactions = () => {
   const classes = useStyles();
   const history = useHistory();
   const transactions = useTransactions();
@@ -79,4 +79,4 @@ const Activity = () => {
   );
 };
 
-export default Activity;
+export default Transactions;

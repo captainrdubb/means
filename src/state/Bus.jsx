@@ -8,7 +8,7 @@ export const keys = {
   CLIENTS: 'CLIENTS',
   JOBS: 'JOBS',
   ACTION_FAB: 'ACTION_FAB',
-  ACTIVITY: 'ACTIVITY',
+  TRANSACTIONS: 'TRANSACTIONS',
 };
 
 export const appBarNav = {
@@ -39,7 +39,7 @@ state[keys.ACTION_FAB] = new BehaviorSubject({
 });
 
 // DATA STATE
-state[keys.ACTIVITY] = new BehaviorSubject([
+state[keys.TRANSACTIONS] = new BehaviorSubject([
   {
     id: 1,
     category: 'Payment',

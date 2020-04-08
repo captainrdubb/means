@@ -53,7 +53,7 @@ const TransactionDetail = () => {
     transaction.transactionType
   );
   const [transactionDate, setTransactionDate] = React.useState(
-    transaction.transactionDate
+    transaction.transactionDate || null
   );
   const [transactionService, setTransactionService] = React.useState(
     transaction.transactionService
@@ -162,7 +162,9 @@ const TransactionDetail = () => {
               id={`${id}-Amount`}
               label='Amount'
               defaultValue={amount}
-              onChange={({ target: { value } }) => setAmount(value)}
+              onChange={({ target: { value } }) =>
+                setAmount(value.replace('$', ''))
+              }
               InputProps={{
                 inputComponent: CurrencyInput,
               }}></TextField>

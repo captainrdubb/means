@@ -17,9 +17,9 @@ export const selectClient = (id) => {
 
 export const selectTransaction = (id) => {
   if (!id) return null;
-  const activity = state[keys.ACTIVITY].getValue();
-  const index = activity.findIndex((a) => a.id == id);
-  return activity[index];
+  const transactions = state[keys.TRANSACTIONS].getValue();
+  const index = transactions.findIndex((a) => a.id == id);
+  return transactions[index];
 };
 
 export const jobsHook = () => {
@@ -48,7 +48,7 @@ export const transactionHook = () => {
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {
-    const subscription = subscribe(keys.ACTIVITY, setActivities);
+    const subscription = subscribe(keys.TRANSACTIONS, setActivities);
     return () => subscription.unsubscribe();
   }, []);
 

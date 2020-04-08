@@ -89,12 +89,12 @@ export const deleteClients = (ids) => {
 export const saveTransaction = (transaction) => {
   new Promise((resolve, reject) => {
     try {
-      const transactions = state[keys.ACTIVITY].getValue();
+      const transactions = state[keys.TRANSACTIONS].getValue();
 
       if (!transaction.id) {
         transaction.id = Math.round(Math.random() * (1000000 - 1) + 1);
         transactions.push(transaction);
-        publish(keys.ACTIVITY, transactions);
+        publish(keys.TRANSACTIONS, transactions);
         resolve();
       }
 
@@ -103,7 +103,7 @@ export const saveTransaction = (transaction) => {
         if (transactions[i].id === transaction.id) temp.push(transaction);
         else temp.push(transactions[i]);
       }
-      publish(keys.ACTIVITY, temp);
+      publish(keys.TRANSACTIONS, temp);
       resolve();
     } catch (error) {
       console.error(error);
@@ -116,11 +116,11 @@ export const deleteTransaction = (ids) => {
   return new Promise((resolve, reject) => {
     try {
       const temp = [];
-      const activity = state[keys.ACTIVITY].getValue();
-      activity.forEach((transaction) => {
+      const transactions = state[keys.TRANSACTIONS].getValue();
+      transactions.forEach((transaction) => {
         if (!ids.includes(transaction.id)) temp.push(transaction);
       });
-      publish(keys.ACTIVITY, temp);
+      publish(keys.TRANSACTIONS, temp);
       resolve();
     } catch (error) {
       console.error(error);
