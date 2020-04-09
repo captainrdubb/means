@@ -25,14 +25,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TransactionItem = ({ transaction, onEdit }) => {
+const TransactionItem = ({ transaction, onEdit, checked, toggleChecked }) => {
   const classes = useStyles();
   const currencyFormat = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
   });
   const { id, category, transactionDate, amount, description } = transaction;
-  const [checked, setChecked] = React.useState(false);
 
   return (
     <ListItem key={id} button onClick={() => onEdit(transaction)}>
@@ -56,11 +55,7 @@ const TransactionItem = ({ transaction, onEdit }) => {
           </React.Fragment>
         }></ListItemText>
       <ListItemSecondaryAction>
-        <Checkbox
-          checked={checked}
-          onChange={({ target: { checked } }) =>
-            setChecked(checked)
-          }></Checkbox>
+        <Checkbox checked={checked} onChange={() => toggleChecked(transaction)}></Checkbox>
       </ListItemSecondaryAction>
     </ListItem>
   );

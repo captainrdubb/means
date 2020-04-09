@@ -8,9 +8,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { abbreviation } from '../utils/nameAbbreviation';
 import Typography from '@material-ui/core/Typography';
 
-const ClientItem = ({ client, onEdit }) => {
+const ClientItem = ({ client, onEdit, checked, toggleChecked }) => {
   const { id, firstName, lastName } = client;
-  const [checked, setChecked] = React.useState(false);
 
   return (
     <ListItem key={id} button onClick={() => onEdit(client)}>
@@ -21,9 +20,7 @@ const ClientItem = ({ client, onEdit }) => {
       <ListItemSecondaryAction>
         <Checkbox
           checked={checked}
-          onChange={({ target: { checked } }) =>
-            setChecked(checked)
-          }></Checkbox>
+          onChange={() => toggleChecked(client)}></Checkbox>
       </ListItemSecondaryAction>
     </ListItem>
   );
