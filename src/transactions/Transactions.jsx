@@ -6,6 +6,7 @@ import sortedIndexOf from 'lodash.sortedindexof';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import { TransactionItem } from '../partial';
+import { exportTransactions } from '../export';
 import {
   publishTo,
   DATA_KEYS,
@@ -31,9 +32,11 @@ const Transactions = () => {
     hide: false,
     onAdd: () => history.push('/activity/create'),
     onDelete: () => onDelete(),
+    onExport: () => exportTransactions(transactions),
   });
 
-  const onEdit = (transaction) => history.push(`/activity/${transaction.id}/edit`);
+  const onEdit = (transaction) =>
+    history.push(`/activity/${transaction.id}/edit`);
 
   const onDelete = () => {
     deleteTransaction(selected).then(() => setSelected([]));

@@ -32,6 +32,7 @@ const Clients = (props) => {
     hide: false,
     onAdd: () => history.push('/clients/create'),
     onDelete: () => onDelete(),
+    onExport: null,
   });
 
   const isChecked = ({ id }) => {

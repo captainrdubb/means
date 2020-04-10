@@ -35,6 +35,7 @@ state[keys.ACTION_FAB] = new BehaviorSubject({
   hide: false,
   onAdd: null,
   onDelete: null,
+  onExport: null,
   promptUser: false,
 });
 
@@ -43,13 +44,18 @@ state[keys.TRANSACTIONS] = new BehaviorSubject([
   {
     id: 1,
     category: 'Payment',
-    transactionType: 'Cash',
     transactionDate: '04/08/2020',
+    transactionType: 'Cash',
+    transactionService: null,
     amount: 20.0,
     description: null,
     job: {
       id: 2,
       title: 'Tool Time',
+      client: {
+        firstName: 'Bob',
+        lastName: 'Vila',
+      },
     },
   },
   {

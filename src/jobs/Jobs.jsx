@@ -32,6 +32,7 @@ export default () => {
     hide: false,
     onAdd: () => history.push('/jobs/create'),
     onDelete: () => onDelete(),
+    onExport: null,
   });
 
   const onDelete = () => {

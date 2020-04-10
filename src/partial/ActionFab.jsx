@@ -27,9 +27,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const actions = [
-  { icon: <AddIcon />, name: 'Add' },
-  { icon: <DeleteIcon />, name: 'Remove' },
-  { icon: <AssessmentIcon />, name: 'Report' },
+  { icon: <AddIcon />, name: 'Add', fnKey: 'onAdd' },
+  { icon: <DeleteIcon />, name: 'Remove', fnKey: 'onDelete' },
+  { icon: <AssessmentIcon />, name: 'Report', fnKey: 'onExport' },
 ];
 
 const MainActions = () => {
@@ -43,12 +43,7 @@ const MainActions = () => {
   }, []);
 
   const onActionClick = (action) => {
-    switch (action.name) {
-      case 'Add':
-        if (fabState.onAdd) fabState.onAdd();
-      case 'Remove':
-        if (fabState.onDelete) fabState.onDelete();
-    }
+    fabState[action.fnKey]();
     handleClose();
   };
 
@@ -73,14 +68,16 @@ const MainActions = () => {
       onOpen={handleOpen}
       open={open}
       direction='up'>
-      {actions.map((action) => (
-        <SpeedDialAction
-          key={action.name}
-          icon={action.icon}
-          tooltipTitle={action.name}
-          onClick={() => onActionClick(action)}
-        />
-      ))}
+      {actions
+        .filter((action) => fabState[action.fnKey])
+        .map((action) => (
+          <SpeedDialAction
+            key={action.name}
+            icon={action.icon}
+            tooltipTitle={action.name}
+            onClick={() => onActionClick(action)}
+          />
+        ))}
     </SpeedDial>
   );
 };
