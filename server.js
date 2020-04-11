@@ -19,6 +19,8 @@ if (process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'dev')
     cert: fs.readFileSync('server.crt'),
   };
 
+const port = process.env.PORT || 5000;
+
 https
   .createServer(options, app)
   .listen(port, () => console.log(colors.green(`listening on port ${port}`)));
