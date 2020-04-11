@@ -13,12 +13,16 @@ app.use(express.static(public));
 app.get('/', (req, res) => res.sendFile(path.join(public, 'index.html')));
 
 let options = {};
-if (process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'dev')
-  options = {
-    key: fs.readFileSync('server.key'),
-    cert: fs.readFileSync('server.crt'),
-  };
-
-https
-  .createServer(options, app)
-  .listen(port, () => console.log(`listening on port ${port}`));
+if (process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'dev') {
+  https
+    .createServer(
+      {
+        key: fs.readFileSync('server.key'),
+        cert: fs.readFileSync('server.crt'),
+      },
+      app
+    )
+    .listen(port, () => console.log(`listening on port ${port}`));
+} else {
+  app.listen(port, () => console.log(`listening on port ${port}`));
+}
