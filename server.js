@@ -6,7 +6,6 @@ const fs = require('fs');
 const app = express();
 const port = 3000;
 const public = path.join(__dirname, config.DEST);
-const colors = require('colors');
 
 app.use(express.static(public));
 
@@ -23,4 +22,4 @@ const port = process.env.PORT || 5000;
 
 https
   .createServer(options, app)
-  .listen(port, () => console.log(colors.green(`listening on port ${port}`)));
+  .listen(port, () => console.log(`listening on port ${port}`));
