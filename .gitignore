@@ -64,7 +64,6 @@ typings/
 # next.js build output
 .next
 
-deploy.bat
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml

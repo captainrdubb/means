@@ -13,7 +13,7 @@ app.use(express.static(public));
 app.get('/', (req, res) => res.sendFile(path.join(public, 'index.html')));
 
 let options = {};
-if (process.env.NODE_ENV.trim() === 'dev')
+if (process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'dev')
   options = {
     key: fs.readFileSync('server.key'),
     cert: fs.readFileSync('server.crt'),
