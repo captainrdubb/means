@@ -12,7 +12,6 @@ app.use(express.static(public));
 
 app.get('/', (req, res) => res.sendFile(path.join(public, 'index.html')));
 
-let options = {};
 if (process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'dev') {
   https
     .createServer(
