@@ -23,10 +23,10 @@ gulp.task('build-dev', function (done) {
     entries: [path.ENTRY_POINT],
     extensions: ['.js', '.jsx'],
     debug: true,
-    fullPaths: true
+    fullPaths: true,
   })
     .transform(babelify, {
-      presets: ['@babel/preset-env', '@babel/preset-react']
+      presets: ['@babel/preset-env', '@babel/preset-react'],
     })
     .bundle()
     .on('error', console.error)
@@ -35,7 +35,7 @@ gulp.task('build-dev', function (done) {
     .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(path.DEST));
-    done();
+  done();
 });
 
 gulp.task('watch', function () {
@@ -50,7 +50,7 @@ gulp.task('build', function (done) {
     debug: true,
   })
     .transform(babelify, {
-      presets: ['@babel/preset-env', '@babel/preset-react']
+      presets: ['@babel/preset-env', '@babel/preset-react'],
     })
     .bundle()
     .on('error', console.error)
@@ -58,7 +58,7 @@ gulp.task('build', function (done) {
     .pipe(buffer())
     .pipe(uglify())
     .pipe(gulp.dest(path.DEST));
-    done();
+  done();
 });
 
 gulp.task('replace-html', function (done) {
@@ -66,11 +66,11 @@ gulp.task('replace-html', function (done) {
     .src(path.HTML)
     .pipe(
       htmlreplace({
-        js: `/${path.MINIFIED_OUT}`
+        js: `/${path.MINIFIED_OUT}`,
       })
     )
     .pipe(gulp.dest(path.DEST));
-    done();
+  done();
 });
 
 gulp.task('prod', gulp.series('clean', 'replace-html', 'build'));
