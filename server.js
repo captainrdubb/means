@@ -5,7 +5,7 @@ const https = require('https');
 const fs = require('fs');
 const app = express();
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 const public = path.join(__dirname, config.DEST);
 
 app.use(express.static(public));

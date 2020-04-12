@@ -12,7 +12,7 @@
     <Host Name="Workbook"/>
   </Hosts>
   <DefaultSettings>
-    <SourceLocation DefaultValue="https://means.stardubb.com" />
+    <SourceLocation DefaultValue="https://localhost:3000" />
   </DefaultSettings>
   <Permissions>ReadWriteDocument</Permissions>
 </OfficeApp>
