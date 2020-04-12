@@ -11,6 +11,9 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
+  title: {
+    flexGrow: 1,
+  },
 }));
 
 const MeansToolbar = ({ onMenuClick, onNavBack }) => {
@@ -52,7 +55,7 @@ const MeansToolbar = ({ onMenuClick, onNavBack }) => {
         className={classes.menuButton}>
         {getNavIcon()}
       </IconButton>
-      <Typography variant='h6' noWrap>
+      <Typography variant='h6' className={classes.title} noWrap>
         {getTitle()}
       </Typography>
     </Toolbar>

@@ -21,6 +21,7 @@ import { Jobs, JobDetail } from '../jobs';
 import { Clients, ClientDetail } from '../clients';
 import { Transactions, TransactionDetail } from '../transactions';
 import { MeansToolbar, MainActions } from '../partial';
+import { Login } from '../login';
 
 const drawerWidth = 240;
 
@@ -149,6 +150,9 @@ const Landing = () => {
           </Route>
           <Route exact path='/jobs/:id/edit'>
             <JobDetail></JobDetail>
+          </Route>
+          <Route exact path='/login'>
+            <Login></Login>
           </Route>
         </Switch>
       </main>
