@@ -7,3 +7,4 @@ if (Office)
     ReactDOM.render(<SignIn />, document.getElementById('root'))
   );
 else ReactDOM.render(<SignIn />, document.getElementById('root'));
+
