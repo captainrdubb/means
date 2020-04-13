@@ -10,6 +10,8 @@ const public = path.join(__dirname, config.DEST);
 
 app.use(express.static(public));
 
+app.get('/login', (req, res) => res.sendFile(path.join(public, 'login.html')));
+
 app.get('/', (req, res) => res.sendFile(path.join(public, 'index.html')));
 
 if (process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'dev') {

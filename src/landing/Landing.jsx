@@ -150,10 +150,7 @@ const Landing = () => {
           </Route>
           <Route exact path='/jobs/:id/edit'>
             <JobDetail></JobDetail>
-          </Route>
-          <Route exact path='/login'>
-            <Login></Login>
-          </Route>
+          </Route>          
         </Switch>
       </main>
       <MainActions />

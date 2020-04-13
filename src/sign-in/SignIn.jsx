@@ -12,6 +12,7 @@ import Zoom from '@material-ui/core/Zoom';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { Logo } from '../partial';
 
 function Copyright() {
   return (
@@ -48,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 
 const formStates = [{ state: 'userName' }, { state: 'password' }];
 
-const Login = () => {
+const SignIn = () => {
   const classes = useStyles();
   const [userName, setUserName] = React.useState();
   const [password, setPassword] = React.useState();
@@ -60,6 +61,7 @@ const Login = () => {
   return (
     <Grid container justify='center'>
       <Grid className={classes.paper} item md={3} xs={12}>
+        <Logo />
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
@@ -120,9 +122,10 @@ const Login = () => {
             </form>
           </Zoom>
         )}
+        <Copyright />
       </Grid>
     </Grid>
   );
 };
 
-export default Login;
+export default SignIn;

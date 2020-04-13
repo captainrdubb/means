@@ -15,6 +15,7 @@ gulp.task('clean', function () {
 
 gulp.task('copy', function (done) {
   gulp.src(path.HTML).pipe(gulp.dest(path.DEST));
+  gulp.src(path.LOGIN_HTML).pipe(gulp.dest(path.DEST));
   done();
 });
 
@@ -35,7 +36,23 @@ gulp.task('build-dev', function (done) {
     .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(path.DEST));
-  done();
+
+  return browserify({
+    entries: [path.LOGIN_ENTRY_POINT],
+    extensions: ['.js', '.jsx'],
+    debug: true,
+    fullPaths: true,
+  })
+    .transform(babelify, {
+      presets: ['@babel/preset-env', '@babel/preset-react'],
+    })
+    .bundle()
+    .on('error', console.error)
+    .pipe(source(path.LOGIN_OUT))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({ loadMaps: true }))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest(path.DEST));
 });
 
 gulp.task('watch', function () {
@@ -44,6 +61,7 @@ gulp.task('watch', function () {
 });
 
 gulp.task('build', function (done) {
+  //main
   browserify({
     entries: [path.ENTRY_POINT],
     extensions: ['.js', '.jsx'],
@@ -58,7 +76,22 @@ gulp.task('build', function (done) {
     .pipe(buffer())
     .pipe(uglify())
     .pipe(gulp.dest(path.DEST));
-  done();
+
+  //login
+  return browserify({
+    entries: [path.LOGIN_ENTRY_POINT],
+    extensions: ['.js', '.jsx'],
+    debug: true,
+  })
+    .transform(babelify, {
+      presets: ['@babel/preset-env', '@babel/preset-react'],
+    })
+    .bundle()
+    .on('error', console.error)
+    .pipe(source(path.LOGIN_MINIFIED_OUT))
+    .pipe(buffer())
+    .pipe(uglify())
+    .pipe(gulp.dest(path.DEST));
 });
 
 gulp.task('replace-html', function (done) {
@@ -70,6 +103,16 @@ gulp.task('replace-html', function (done) {
       })
     )
     .pipe(gulp.dest(path.DEST));
+
+  gulp
+    .src(path.LOGIN_HTML)
+    .pipe(
+      htmlreplace({
+        js: `/${path.LOGIN_MINIFIED_OUT}`,
+      })
+    )
+    .pipe(gulp.dest(path.DEST));
+
   done();
 });
 

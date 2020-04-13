@@ -6,7 +6,7 @@ import { Landing } from '../landing';
 
 const theme = createMuiTheme();
 
-export const App = () => {
+const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Router>
