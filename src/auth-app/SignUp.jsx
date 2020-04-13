@@ -12,7 +12,7 @@ import Zoom from '@material-ui/core/Zoom';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { Logo } from '../partial';
+import Logo from '../Logo';
 
 function Copyright() {
   return (

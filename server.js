@@ -1,5 +1,5 @@
 const path = require('path');
-const config = require('./gulp-config');
+const config = require('./gulpfile.js/gulp-config');
 const express = require('express');
 const https = require('https');
 const fs = require('fs');
@@ -10,7 +10,7 @@ const public = path.join(__dirname, config.DEST);
 
 app.use(express.static(public));
 
-app.get('/login', (req, res) => res.sendFile(path.join(public, 'login.html')));
+app.get('/auth', (req, res) => res.sendFile(path.join(public, 'auth.html')));
 
 app.get('/', (req, res) => res.sendFile(path.join(public, 'index.html')));
 
