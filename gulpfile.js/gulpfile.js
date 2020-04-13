@@ -12,12 +12,9 @@ const watchfiles = () => {
 };
 
 exports.prod = series(
-  app.Clean,
-  auth.CleanAuth,
-  app.ReplaceHtml,
-  auth.ReplaceHtmlAuth,
-  app.Build,
-  auth.BuildAuth
+  parallel(app.Clean, auth.CleanAuth),
+  parallel(app.ReplaceHtml, auth.ReplaceHtmlAuth),
+  parallel(app.Build, auth.BuildAuth)
 );
 
 exports.default = series(

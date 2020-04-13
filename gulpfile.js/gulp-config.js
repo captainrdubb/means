@@ -12,8 +12,9 @@ module.exports = {
   SRC: [
     'src/**/*.js',
     'src/**/*.jsx',
+    '!src/auth.js',
     '!src/auth-app/*',
     '!src/**/*.test.jsx',
   ],
-  AUTH_SRC: ['../src/auth-app/**/*.js', '../src/auth-app/**/*.jsx'],
+  AUTH_SRC: ['src/auth.js, src/auth-app/**/*.js', 'src/auth-app/**/*.jsx'],
 };
