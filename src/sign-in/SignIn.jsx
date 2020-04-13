@@ -125,12 +125,12 @@ const SignIn = () => {
               </form>
             </Zoom>
           )}
-          <Grid container>
-            <Grid item xs>
+          <Grid container justify='center'>
+            {/* <Grid item xs>
               <Link href='#' variant='b'>
                 Forgot password?
               </Link>
-            </Grid>
+            </Grid> */}
             <Grid item>
               <Link href='#' variant='body2'>
                 {"Don't have an account? Sign Up"}
