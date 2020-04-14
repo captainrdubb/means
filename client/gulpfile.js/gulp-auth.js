@@ -10,7 +10,7 @@ const del = require('del');
 const path = require('./gulp-config');
 
 const CleanAuth = () => {
-  return del(`${path.DEST}/auth*`);
+  return del(`${path.DEST}/auth*`, { force: true });
 };
 
 const CopyAuth = () => {
@@ -68,6 +68,6 @@ module.exports = {
   CleanAuth,
   CopyAuth,
   BuildAuth,
-  BuildAuthDev,  
+  BuildAuthDev,
   ReplaceHtmlAuth,
 };

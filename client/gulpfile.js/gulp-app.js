@@ -10,7 +10,9 @@ const del = require('del');
 const path = require('./gulp-config');
 
 const Clean = () => {
-  return del([`${path.DEST}/index.html`, `${path.DEST}/bundle.*`]);
+  return del([`${path.DEST}/index.html`, `${path.DEST}/bundle.*`], {
+    force: true,
+  });
 };
 
 const Copy = (done) => {

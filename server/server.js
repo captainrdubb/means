@@ -22,7 +22,7 @@ if (process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'dev') {
       },
       app
     )
-    .listen(port, () => console.log(`listening on port ${port}`));
+    .listen(port, () => console.log(`listening on port ${port} with https`));
 } else {
   app.listen(port, () => console.log(`listening on port ${port}`));
 }
