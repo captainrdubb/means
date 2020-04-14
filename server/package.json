@@ -1,0 +1,25 @@
+{
+  "name": "means-server",
+  "version": "1.0.0",
+  "description": "web service for cash flow tracker",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server",
+    "start:dev": "set NODE_ENV=dev && node server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@ssh.dev.azure.com:v3/starshiprdubb/stardubbcash/stardubbcash"
+  },
+  "keywords": [
+    "cash",
+    "means",
+    "server"
+  ],
+  "author": "Joel Rainear Wills <joel.rainearwills@starduv.com>",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

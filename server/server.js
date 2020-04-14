@@ -1,12 +1,11 @@
 const path = require('path');
-const config = require('../gulpfile.js').config;
 const express = require('express');
 const https = require('https');
 const fs = require('fs');
 const app = express();
 
 const port = process.env.PORT || 3000;
-const public = path.join(path.dirname(__dirname), config.DEST);
+const public = path.join(__dirname, 'public');
 
 app.use(express.static(public));
 
