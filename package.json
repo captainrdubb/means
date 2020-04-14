@@ -4,10 +4,10 @@
   "description": "Cash Flow Tracker",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node server",
     "build": "gulp.cmd prod",
-    "start:dev": "set NODE_ENV=dev && node server.js",
-    "build:dev": "gulp.cmd"
+    "start:dev": "set NODE_ENV=dev && node server",
+    "build:dev": "gulp.cmd dev"
   },
   "repository": {
     "type": "git",

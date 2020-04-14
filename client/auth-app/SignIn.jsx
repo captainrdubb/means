@@ -1,17 +1,14 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Zoom from '@material-ui/core/Zoom';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import Logo from '../Logo';
 
 function Copyright() {
@@ -49,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 const formStates = [{ state: 'userName' }, { state: 'password' }];
 
-const SignUp = () => {
+const SignIn = () => {
   const classes = useStyles();
   const [userName, setUserName] = React.useState();
   const [password, setPassword] = React.useState();
@@ -60,7 +57,7 @@ const SignUp = () => {
 
   return (
     <Grid container justify='center'>
-      <Grid className={classes.paper} item md={3} xs={12}>
+      <Grid className={classes.paper} item md={4} xs={12}>
         <Logo />
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -80,6 +77,7 @@ const SignUp = () => {
                 label='Email Address'
                 name='email'
                 autoComplete='email'
+                defaultValue={userName}
                 autoFocus
                 onChange={({ target: { value } }) => setUserName(value)}
               />
@@ -107,6 +105,7 @@ const SignUp = () => {
                 label='Password'
                 name='password'
                 autoComplete='password'
+                defaultValue={password}
                 autoFocus
                 onChange={({ target: { value } }) => setPassword(value)}
               />
@@ -122,10 +121,22 @@ const SignUp = () => {
             </form>
           </Zoom>
         )}
-        <Copyright />
+        <Grid container justify='center'>
+          {/* <Grid item xs>
+              <Link href='#' variant='b'>
+                Forgot password?
+              </Link>
+            </Grid> */}
+          <Grid item>
+            <Link to='/signup'>{"Don't have an account? Sign Up"}</Link>
+          </Grid>
+        </Grid>
+        <Box mt={8}>
+          <Copyright />
+        </Box>
       </Grid>
     </Grid>
   );
 };
 
-export default SignUp;
+export default SignIn;

@@ -17,7 +17,7 @@ exports.prod = series(
   parallel(app.Build, auth.BuildAuth)
 );
 
-exports.default = series(
+exports.dev = series(
   app.Clean,
   auth.CleanAuth,
   app.Copy,

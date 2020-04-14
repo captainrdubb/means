@@ -1,5 +1,8 @@
-const Dev = require('./gulpfile').default;
-const { prod } = require('./gulpfile');
+const { prod, dev } = require('./gulpfile');
+const { path } = require('./gulp-config');
+const config = require('./gulp-config');
 
-exports.default = Dev;
+exports.dev = dev;
 exports.prod = prod;
+exports.path = path;
+exports.config = config;

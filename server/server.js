@@ -1,12 +1,12 @@
 const path = require('path');
-const config = require('./gulpfile.js/gulp-config');
+const config = require('../gulpfile.js').config;
 const express = require('express');
 const https = require('https');
 const fs = require('fs');
 const app = express();
 
 const port = process.env.PORT || 3000;
-const public = path.join(__dirname, config.DEST);
+const public = path.join(path.dirname(__dirname), config.DEST);
 
 app.use(express.static(public));
 
@@ -18,8 +18,8 @@ if (process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'dev') {
   https
     .createServer(
       {
-        key: fs.readFileSync('server.key'),
-        cert: fs.readFileSync('server.crt'),
+        key: fs.readFileSync(path.join(__dirname, 'server.key')),
+        cert: fs.readFileSync(path.join(__dirname, 'server.crt')),
       },
       app
     )
