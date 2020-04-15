@@ -121,14 +121,14 @@ const SignIn = () => {
             </form>
           </Zoom>
         )}
-        <Grid container justify='center'>
+        <Grid container justify='flex-end'>
           {/* <Grid item xs>
               <Link href='#' variant='b'>
                 Forgot password?
               </Link>
             </Grid> */}
           <Grid item>
-            <Link to='/signup'>{"Don't have an account? Sign Up"}</Link>
+            <Link to='/signup'>{"Don't have an account? Sign up"}</Link>
           </Grid>
         </Grid>
         <Box mt={8}>

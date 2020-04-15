@@ -2,15 +2,20 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import Logo from '../Logo';
+
+const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 function Copyright() {
   return (
@@ -38,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(3),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -47,10 +52,31 @@ const useStyles = makeStyles((theme) => ({
 
 const SignUp = () => {
   const classes = useStyles();
-  const [userName, setUserName] = React.useState();
-  const [password, setPassword] = React.useState();
+  const [isMasked, setIsMasked] = React.useState(true);
+  const [isValidEmail, setIsValidEmail] = React.useState();
+  const [isValidPassword, setIsValidPassword] = React.useState();
 
-  const onSubmit = () => setFormState(formStates[0]);
+  const validateEmail = (email) => {
+    setIsValidEmail(!emailPattern.test(email));
+  };
+
+  const validatePassword = (password) => {
+    const hasUpper = /A-Z/.test(password);
+    const hasLower = /a-z/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSpecial = /^\w/.test(password);
+    setIsValidPassword(!(hasUpper && hasLower && hasNumber && hasSpecial));
+  };
+  // const onSubmit = () => {
+  //   fetch('/signup', {
+  //     method: 'POST',
+  //     credentials: 'same-origin',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     redirect: 'follow',
+  //   });
+  // };
 
   return (
     <Grid container justify='center'>
@@ -62,43 +88,94 @@ const SignUp = () => {
         <Typography component='h1' variant='h5'>
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            id='email'
-            label='Email Address'
-            name='email'
-            autoComplete='email'
-            defaultValue={userName}
-            autoFocus
-            onChange={({ target: { value } }) => setUserName(value)}
-          />
-          <TextField
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            id='password'
-            label='Password'
-            name='password'
-            autoComplete='password'
-            defaultValue={password}
-            autoFocus
-            onChange={({ target: { value } }) => setPassword(value)}
-          />
+        <form className={classes.form} method='post' action='/signup'>
+          <Grid container spacing={2}>
+            {/* <Grid item xs={12} sm={6}>
+              <TextField                
+                variant='outlined'
+                required
+                id='firstName'
+                label='First Name'
+                name='firstName'
+                autoComplete='given-name'
+                fullWidth
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant='outlined'
+                required
+                id='lastName'
+                label='Last Name'
+                name='lastName'
+                autoComplete='family-name'
+                fullWidth
+                autoFocus
+              />
+            </Grid> */}
+            <Grid item xs={12}>
+              <TextField
+                error={isValidEmail}
+                variant='outlined'
+                required
+                fullWidth
+                id='email'
+                label='Email Address'
+                name='email'
+                type='email'
+                autoComplete='email'
+                helperText='Must contain valid email'
+                onChange={({ target: { value } }) => validateEmail(value)}
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                error={isValidPassword}
+                variant='outlined'
+                type={isMasked ? 'password' : 'text'}
+                required
+                fullWidth
+                id='password'
+                label='Password'
+                name='password'
+                autoComplete='password'
+                helperText='Password must be at least six characters long including an uppercase, lowercase, number, and special character'
+                onChange={({ target: { value } }) => validatePassword(value)}
+                autoFocus
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position='end'>
+                      {isMasked ? (
+                        <VisibilityIcon
+                          onClick={() => setIsMasked(!isMasked)}
+                        />
+                      ) : (
+                        <VisibilityOffIcon
+                          onClick={() => setIsMasked(!isMasked)}
+                        />
+                      )}
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+          </Grid>
           <Button
             type='submit'
             fullWidth
             variant='contained'
             color='primary'
-            onClick={onSubmit}
             className={classes.submit}>
-            Submit
+            Sign Up
           </Button>
         </form>
+        <Grid container justify='flex-end'>
+          <Grid item>
+            <Link to='/signin'>{'Already have an account? Sign in'}</Link>
+          </Grid>
+        </Grid>
         <Box mt={8}>
           <Copyright />
         </Box>
