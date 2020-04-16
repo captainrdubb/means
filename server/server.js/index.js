@@ -3,15 +3,19 @@ const path = require('path');
 const http = require('http');
 const https = require('https');
 const express = require('express');
+const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const { genSaltSync } = require('bcryptjs');
-const { config } = require('./config');
+const { config } = require('../config');
 
 const app = express();
 const key = fs.readFileSync(path.join(__dirname, 'server.key'));
 const cert = fs.readFileSync(path.join(__dirname, 'server.crt'));
 const sessionKeys = [genSaltSync(1), genSaltSync(1), genSaltSync(1)];
 const public = path.join(__dirname, 'public');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
   cookieSession({
@@ -29,7 +33,6 @@ app.use(express.static(public));
 app.get('/auth', (req, res) => res.sendFile(path.join(public, 'auth.html')));
 app.post('/signup', (req, res) => {
   console.log(req.body);
-  req.session.user = req.body;
   res.redirect('/');
 });
 
