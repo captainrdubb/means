@@ -14,3 +14,4 @@ export { saveTransaction } from './Persist';
 export { selectTransaction } from './Read';
 export { deleteTransaction } from './Persist';
 export { transactionHook as useTransactions } from './Read';
+export { userHook as useUser } from './Read';

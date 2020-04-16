@@ -6,6 +6,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { DATA_KEYS, NAV_STATES, subscribeTo } from '../state';
+import { AuthUser } from '.';
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
@@ -58,6 +59,7 @@ const MeansToolbar = ({ onMenuClick, onNavBack }) => {
       <Typography variant='h6' className={classes.title} noWrap>
         {getTitle()}
       </Typography>
+      <AuthUser />
     </Toolbar>
   );
 };

@@ -54,3 +54,14 @@ export const transactionHook = () => {
 
   return activities;
 };
+
+export const userHook = () => {
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    const subscription = subscribe(keys.USER, setUser);
+    return () => subscription.unsubscribe();
+  }, []);
+
+  return user;
+};
