@@ -106,7 +106,7 @@ const SignUp = () => {
           ref={(element) => (formReference = element)}
           className={classes.form}
           method='POST'
-          action='/signup'
+          action='/api/signup'
           noValidate
           onSubmit={(event) => onSubmit(event)}>
           <Grid container spacing={2}>

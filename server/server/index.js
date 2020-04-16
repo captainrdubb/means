@@ -7,16 +7,17 @@ const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const { genSaltSync } = require('bcryptjs');
 const { config } = require('../config');
+const { AuthRouter } = require('./authRoute');
+const { ApiRouter } = require('./apiRoute');
+const { ClientRouter } = require('./clientRoute');
 
 const app = express();
 const key = fs.readFileSync(path.join(__dirname, 'server.key'));
 const cert = fs.readFileSync(path.join(__dirname, 'server.crt'));
 const sessionKeys = [genSaltSync(1), genSaltSync(1), genSaltSync(1)];
-const public = path.join(__dirname, 'public');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(
   cookieSession({
     name: 'means-session',
@@ -27,17 +28,10 @@ app.use(
   })
 );
 
-app.use(express.static(public));
-
-//auth
-app.get('/auth', (req, res) => res.sendFile(path.join(public, 'auth.html')));
-app.post('/signup', (req, res) => {
-  console.log(req.body);
-  res.redirect('/');
-});
-
-//client
-app.get('/', (req, res) => res.sendFile(path.join(public, 'index.html')));
+app.use('/auth', AuthRouter);
+app.use('/api', ApiRouter);
+app.use('/', ClientRouter);
+app.use(express.static(config.publicFolder));
 
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer({ key, cert }, app);
