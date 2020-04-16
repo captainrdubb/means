@@ -31,6 +31,11 @@ function Copyright() {
 }
 
 const useStyles = makeStyles((theme) => ({
+  hover: {
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -61,11 +66,14 @@ const SignUp = () => {
   };
 
   const validatePassword = (password) => {
-    const hasUpper = /A-Z/.test(password);
-    const hasLower = /a-z/.test(password);
-    const hasNumber = /\d/.test(password);
-    const hasSpecial = /^\w/.test(password);
-    setIsValidPassword(!(hasUpper && hasLower && hasNumber && hasSpecial));
+    const hasUpper = /[A-Z]/g.test(password);
+    const hasLower = /[a-z]/g.test(password);
+    const hasNumber = /\d/g.test(password);
+    const hasSpecial = /\W/g.test(password);
+    const hasSpace = /\s/g.test(password);
+    setIsValidPassword(
+      !(hasUpper && hasLower && hasNumber && hasSpecial && !hasSpace)
+    );
   };
   // const onSubmit = () => {
   //   fetch('/signup', {
@@ -125,7 +133,7 @@ const SignUp = () => {
                 name='email'
                 type='email'
                 autoComplete='email'
-                helperText='Must contain valid email'
+                helperText={isValidEmail ? '' : 'Must contain valid email'}
                 onChange={({ target: { value } }) => validateEmail(value)}
                 autoFocus
               />
@@ -149,10 +157,12 @@ const SignUp = () => {
                     <InputAdornment position='end'>
                       {isMasked ? (
                         <VisibilityIcon
+                          className={classes.hover}
                           onClick={() => setIsMasked(!isMasked)}
                         />
                       ) : (
                         <VisibilityOffIcon
+                          className={classes.hover}
                           onClick={() => setIsMasked(!isMasked)}
                         />
                       )}
