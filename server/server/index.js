@@ -7,9 +7,9 @@ const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const { genSaltSync } = require('bcryptjs');
 const { config } = require('../config');
-const { AuthRouter } = require('./authRoute');
-const { ApiRouter } = require('./apiRoute');
-const { ClientRouter } = require('./clientRoute');
+const { authRouter } = require('./authRoute');
+const { apiRouter } = require('./apiRoute');
+const { clientRouter } = require('./clientRoute');
 
 const app = express();
 const key = fs.readFileSync(path.join(__dirname, 'server.key'));
@@ -28,9 +28,9 @@ app.use(
   })
 );
 
-app.use('/auth', AuthRouter);
-app.use('/api', ApiRouter);
-app.use('/', ClientRouter);
+app.use('/auth', authRouter);
+app.use('/api', apiRouter);
+app.use('/', clientRouter);
 app.use(express.static(config.publicFolder));
 
 const httpServer = http.createServer(app);

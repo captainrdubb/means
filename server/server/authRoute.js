@@ -8,4 +8,4 @@ router.get('/', (req, res) =>
   res.sendFile(path.join(config.publicFolder, 'auth.html'))
 );
 
-exports.AuthRouter = router;
+exports.authRouter = router;

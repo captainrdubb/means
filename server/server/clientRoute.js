@@ -8,4 +8,4 @@ router.get('/', (req, res) =>
   res.sendFile(path.join(config.publicFolder, 'index.html'))
 );
 
-exports.ClientRouter = router;
+exports.clientRouter = router;
