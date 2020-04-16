@@ -12,7 +12,7 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Logo from '../Logo';
 
 const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%', //ie 11 fix
     marginTop: theme.spacing(3),
   },
   submit: {
@@ -57,13 +57,42 @@ const useStyles = makeStyles((theme) => ({
 
 const SignUp = () => {
   const classes = useStyles();
+  const history = useHistory();
   const [isMasked, setIsMasked] = React.useState(true);
-  const [isValidEmail, setIsValidEmail] = React.useState();
-  const [isValidPassword, setIsValidPassword] = React.useState();
+  const [email, setEmail] = React.useState();
+  const [password, setPassword] = React.useState();
+  const [isValidEmail, setIsValidEmail] = React.useState(true);
+  const [isValidPassword, setIsValidPassword] = React.useState(true);
+  let formReference = null;
 
-  const validateEmail = (email) => {
-    setIsValidEmail(!emailPattern.test(email));
+  const emailHelper = 'Must contain valid email';
+  const passwordHelper =
+    'Password must be at least six characters long including an uppercase, lowercase, number, and special character';
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+
+    const validEmail = validateEmail(email);
+    setIsValidEmail(validEmail);
+
+    const validPassword = validatePassword(password);
+    setIsValidPassword(validPassword);
+
+    if (validEmail && validPassword) formReference.submit();
   };
+
+  const signUp = () => {
+    fetch('/signup', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+  };
+
+  const validateEmail = (email) => emailPattern.test(email);
 
   const validatePassword = (password) => {
     const hasUpper = /[A-Z]/g.test(password);
@@ -71,20 +100,8 @@ const SignUp = () => {
     const hasNumber = /\d/g.test(password);
     const hasSpecial = /\W/g.test(password);
     const hasSpace = /\s/g.test(password);
-    setIsValidPassword(
-      !(hasUpper && hasLower && hasNumber && hasSpecial && !hasSpace)
-    );
+    return hasUpper && hasLower && hasNumber && hasSpecial && !hasSpace;
   };
-  // const onSubmit = () => {
-  //   fetch('/signup', {
-  //     method: 'POST',
-  //     credentials: 'same-origin',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     redirect: 'follow',
-  //   });
-  // };
 
   return (
     <Grid container justify='center'>
@@ -96,35 +113,17 @@ const SignUp = () => {
         <Typography component='h1' variant='h5'>
           Sign up
         </Typography>
-        <form className={classes.form} method='post' action='/signup'>
+        <form
+          ref={(element) => (formReference = element)}
+          className={classes.form}
+          method='POST'
+          action='/signup'
+          noValidate
+          onSubmit={(event) => onSubmit(event)}>
           <Grid container spacing={2}>
-            {/* <Grid item xs={12} sm={6}>
-              <TextField                
-                variant='outlined'
-                required
-                id='firstName'
-                label='First Name'
-                name='firstName'
-                autoComplete='given-name'
-                fullWidth
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant='outlined'
-                required
-                id='lastName'
-                label='Last Name'
-                name='lastName'
-                autoComplete='family-name'
-                fullWidth
-                autoFocus
-              />
-            </Grid> */}
             <Grid item xs={12}>
               <TextField
-                error={isValidEmail}
+                error={!isValidEmail}
                 variant='outlined'
                 required
                 fullWidth
@@ -132,15 +131,20 @@ const SignUp = () => {
                 label='Email Address'
                 name='email'
                 type='email'
+                autoFocus
                 autoComplete='email'
-                helperText={isValidEmail ? '' : 'Must contain valid email'}
-                onChange={({ target: { value } }) => validateEmail(value)}
+                helperText={isValidEmail ? '' : emailHelper}
+                onChange={({ target: { value } }) => setEmail(value)}
+                onBlur={({ target: { value } }) =>
+                  setIsValidEmail(validateEmail(value))
+                }
+                defaultValue={email}
                 autoFocus
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                error={isValidPassword}
+                error={!isValidPassword}
                 variant='outlined'
                 type={isMasked ? 'password' : 'text'}
                 required
@@ -149,9 +153,12 @@ const SignUp = () => {
                 label='Password'
                 name='password'
                 autoComplete='password'
-                helperText='Password must be at least six characters long including an uppercase, lowercase, number, and special character'
-                onChange={({ target: { value } }) => validatePassword(value)}
-                autoFocus
+                helperText={isValidPassword ? '' : passwordHelper}
+                onChange={({ target: { value } }) => setPassword(value)}
+                onBlur={({ target: { value } }) =>
+                  setIsValidPassword(validatePassword(value))
+                }
+                defaultValue={password}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position='end'>
