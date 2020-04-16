@@ -81,17 +81,6 @@ const SignUp = () => {
     if (validEmail && validPassword) formReference.submit();
   };
 
-  const signUp = () => {
-    fetch('/signup', {
-      method: 'POST',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
-  };
-
   const validateEmail = (email) => emailPattern.test(email);
 
   const validatePassword = (password) => {
