@@ -141,7 +141,7 @@ const SignUp = () => {
                 id='password'
                 label='Password'
                 name='password'
-                autoComplete='password'
+                autoComplete='current-password'
                 helperText={isValidPassword ? '' : passwordHelper}
                 onChange={({ target: { value } }) => setPassword(value)}
                 onBlur={({ target: { value } }) =>

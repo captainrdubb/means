@@ -6,7 +6,8 @@ const router = express.Router();
 router.post('/signup', async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    await authService.registerUser(email, password);
+    const user = await authService.registerUser(email, password);
+    req.session.userId = user.userId;
     res.redirect('/');
   } catch (error) {
     next(error);

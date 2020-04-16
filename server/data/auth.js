@@ -8,10 +8,11 @@ const db = new AWS.DynamoDB.DocumentClient({
 });
 
 const saveUser = (user, resolve, reject) => {
+  const userId = v4();
   const params = {
     TableName: 'user',
     Item: {
-      user_id: v4(),
+      user_id: userId,
       email: user.email,
       salt: user.salt,
       password: user.password,
@@ -20,7 +21,7 @@ const saveUser = (user, resolve, reject) => {
 
   db.put(params, (err, data) => {
     if (err) reject(err);
-    resolve(data);
+    resolve({ userId, ...user });
   });
 };
 
