@@ -2,13 +2,13 @@ import React from 'react';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Switch, Route, Redirect } from 'react-router';
-import { HashRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 
 const Routing = () => {
   return (
-    <Router >
+    <Router basename="/auth">
       <Container fixed>
         <CssBaseline />
         <main>

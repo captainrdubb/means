@@ -6,13 +6,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>Means</title>
+  <script>
+    var pushStateRef = history.pushState;
+    var replaceStateRef = history.replaceState;
+  </script>
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js" type="text/javascript"></script>
+  <script>
+    history.pushState = pushStateRef;
+    history.replaceState = replaceStateRef;
+    delete pushStateRef;
+    delete replaceStateRef;
+  </script>
 </head>
 
 <body style="margin: 0">
   <div id="root"></div>
   <!-- build:js -->
-  <script type="text/javascript" src="auth-bundle.js"></script>
+  <script type="text/javascript" src="/auth/auth-bundle.js"></script>
   <!-- endbuild -->
 </body>
 

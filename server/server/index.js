@@ -4,33 +4,41 @@ const http = require('http');
 const https = require('https');
 const express = require('express');
 const bodyParser = require('body-parser');
-const cookieSession = require('cookie-session');
+const sessions = require('client-sessions');
 const { genSaltSync } = require('bcryptjs');
 const { config } = require('../config');
 const { authRouter } = require('./authRoute');
 const { apiRouter } = require('./apiRoute');
 const { clientRouter } = require('./clientRoute');
+const { requireAuth } = require('./requireAuth');
 
 const app = express();
-const sessionKeys = [genSaltSync(1), genSaltSync(1), genSaltSync(1)];
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
-  cookieSession({
-    name: 'means-session',
-    keys: sessionKeys,
-    maxAge: 24 * 60 * 60 * 1000,
-    domain: config.domain,
-    sameSite: 'strict',
-    signed: process.env.NODE_ENV !== 'dev',
+  sessions({
+    cookieName: 'MEANS',
+    secret: genSaltSync(3),
+    duration: 60 * 60 * 1000,
+    activeDuration: 30 * 60 * 1000,
+    cookie: {
+      signed: process.env.NODE_ENV !== 'dev',
+      ephemeral: true,
+      sameSite: 'strict',
+    },
   })
 );
 
-app.use('/auth', authRouter);
-app.use('/api', apiRouter);
-app.use('/', clientRouter);
-app.use(express.static(config.publicFolder));
+const whatThe = (location) => (req, res, next) => {
+  console.log(location, req.originalUrl, req.params);
+  next();
+};
+
+app.use('/api', requireAuth, apiRouter);
+
+app.use('/auth', whatThe('auth: '), authRouter, express.static(config.publicFolder));
+
+app.use('/', requireAuth, clientRouter, express.static(config.publicFolder));
 
 if (process.env.NODE_ENV === 'dev') {
   const key = fs.readFileSync(path.join(__dirname, 'server.key'));
