@@ -2,6 +2,7 @@ export { keys as DATA_KEYS } from './Bus';
 export { appBarNav as NAV_STATES } from './Bus';
 export { publish as publishTo } from './Bus';
 export { subscribe as subscribeTo } from './Bus';
+export { merge as mergeTo } from './Bus';
 export { saveJob } from './Persist';
 export { selectJob } from './Read';
 export { deleteJobs } from './Persist';

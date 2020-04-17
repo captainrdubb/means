@@ -17,4 +17,7 @@ module.exports = {
     '!src/**/*.test.jsx',
   ],
   AUTH_SRC: ['src/auth.js, src/auth-app/**/*.js', 'src/auth-app/**/*.jsx'],
+  APP_CONFIG: 'src/config/config.js',
+  DEV_API_URL: 'https://localhost:3443/api',
+  PROD_API_URL: 'https://means.starduv.com/api',
 };

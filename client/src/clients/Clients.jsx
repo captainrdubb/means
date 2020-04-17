@@ -13,6 +13,7 @@ import {
   useClients,
   NAV_STATES,
   deleteClients,
+  mergeTo,
 } from '../state';
 
 const useStyles = makeStyles((theme) => ({}));
@@ -50,15 +51,15 @@ const Clients = (props) => {
 
     if (index !== null) temp.splice(index, 0, id);
 
-    if (temp.length) publishTo(DATA_KEYS.ACTION_FAB, { promptUser: true });
-    else publishTo(DATA_KEYS.ACTION_FAB, { promptUser: false });
+    if (temp.length) mergeTo(DATA_KEYS.ACTION_FAB, { promptUser: true });
+    else mergeTo(DATA_KEYS.ACTION_FAB, { promptUser: false });
 
     setSelected(temp);
   };
 
   const onDelete = () => {
     deleteClients(selected).then(() => setSelected([]));
-    publishTo(DATA_KEYS.ACTION_FAB, { promptUser: false });
+    mergeTo(DATA_KEYS.ACTION_FAB, { promptUser: false });
   };
 
   const onEdit = (client) => history.push(`/clients/${client.id}/edit`);

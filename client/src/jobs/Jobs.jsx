@@ -13,6 +13,7 @@ import {
   NAV_STATES,
   useJobs,
   deleteJobs,
+  mergeTo,
 } from '../state';
 
 const useStyles = makeStyles((theme) => ({}));
@@ -37,7 +38,7 @@ export default () => {
 
   const onDelete = () => {
     deleteJobs(selected).then(() => setSelected([]));
-    publishTo(DATA_KEYS.ACTION_FAB, { promptUser: false });
+    mergeTo(DATA_KEYS.ACTION_FAB, { promptUser: false });
   };
 
   const isChecked = ({ id }) => {
@@ -55,8 +56,8 @@ export default () => {
 
     if (index !== null) temp.splice(index, 0, id);
 
-    if (temp.length) publishTo(DATA_KEYS.ACTION_FAB, { promptUser: true });
-    else publishTo(DATA_KEYS.ACTION_FAB, { promptUser: false });
+    if (temp.length) mergeTo(DATA_KEYS.ACTION_FAB, { promptUser: true });
+    else mergeTo(DATA_KEYS.ACTION_FAB, { promptUser: false });
 
     setSelected(temp);
   };

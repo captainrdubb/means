@@ -59,7 +59,7 @@ export const userHook = () => {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    const subscription = subscribe(keys.USER, setUser);
+    const subscription = subscribe(keys.USER, setUser, true);
     return () => subscription.unsubscribe();
   }, []);
 

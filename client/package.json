@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Cash Flow Tracker",
   "main": "index.js",
-  "scripts": {    
+  "scripts": {
     "build": "gulp.cmd prod",
     "build:dev": "gulp.cmd dev"
   },
@@ -23,6 +23,7 @@
     "del": "^5.1.0",
     "gulp": "^4.0.2",
     "gulp-html-replace": "^1.6.2",
+    "gulp-replace": "^1.0.0",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
     "vinyl-source-stream": "^2.0.0",

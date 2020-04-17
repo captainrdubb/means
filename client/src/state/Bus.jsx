@@ -1,4 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
+import { getAuthUser } from './apiClient';
 
 //have keys for subscription
 //have a subscription method
@@ -9,6 +10,11 @@ export const keys = {
   JOBS: 'JOBS',
   ACTION_FAB: 'ACTION_FAB',
   TRANSACTIONS: 'TRANSACTIONS',
+  USER: 'USER',
+};
+
+const api = {
+  [keys.USER]: { get: getAuthUser },
 };
 
 export const appBarNav = {
@@ -40,6 +46,8 @@ state[keys.ACTION_FAB] = new BehaviorSubject({
 });
 
 // DATA STATE
+state[keys.USER] = new BehaviorSubject(null);
+
 state[keys.TRANSACTIONS] = new BehaviorSubject([
   {
     id: 1,
@@ -131,12 +139,21 @@ state[keys.JOBS] = new BehaviorSubject([
   },
 ]);
 
-export const publish = (key, data) => {
-  let s = state[key].getValue();
-  if (Array.isArray(s)) state[key].next(data);
-  else state[key].next({ ...s, ...data });
+export const merge = (key, data) => {
+  let observable = state[key];
+  let s = observable.getValue();
+  if (Array.isArray(s)) observable.next([...s, ...data]);
+  else observable.next({ ...s, ...data });
 };
 
-export const subscribe = (key, callback) => {
-  return state[key].subscribe(callback);
+export const publish = (key, data) => {
+  state[key].next(data);
+};
+
+export const subscribe = (key, callback, requestWhenNull) => {
+  const observable = state[key];
+  if (requestWhenNull && !observable.getValue()) {
+    api[key].get().subscribe((user) => observable.next(user));
+  }
+  return observable.subscribe(callback);
 };
