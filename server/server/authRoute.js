@@ -11,7 +11,7 @@ router.get('/', (req, res) =>
 
 router.post('/signup', async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { email, password } = req.body;    
     const user = await authService.registerUser(email, password);
     req.MEANS.user = { userId: user.userId };
     res.redirect('../');

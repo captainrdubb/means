@@ -24,7 +24,7 @@ app.use(
     cookie: {
       signed: process.env.NODE_ENV !== 'dev',
       ephemeral: true,
-      sameSite: 'strict',
+      sameSite: 'strict',      
     },
   })
 );
@@ -36,7 +36,7 @@ const whatThe = (location) => (req, res, next) => {
 
 app.use('/api', requireAuth, apiRouter);
 
-app.use('/auth', whatThe('auth: '), authRouter, express.static(config.publicFolder));
+app.use('/auth', authRouter, express.static(config.publicFolder));
 
 app.use('/', requireAuth, clientRouter, express.static(config.publicFolder));
 

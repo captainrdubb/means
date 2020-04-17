@@ -7,9 +7,11 @@ const registerUser = async (email, password) => {
   const hashedPassword = hashSync(password, salt);
   const user = new User(email, hashedPassword, salt);
 
-  return new Promise((resolve, reject) => {
-    auth.saveUser(user, resolve, reject);
-  });
+  const hasEmail = auth.hasEmail(email);
+
+  console.log(hasEmail);
+
+  return auth.saveUser(user);
 };
 
 module.exports = {
