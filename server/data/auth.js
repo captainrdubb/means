@@ -1,51 +1,44 @@
-const AWS = require('aws-sdk');
-const { v4 } = require('uuid');
 const { config } = require('../config');
+const MongoClient = require('mongodb').MongoClient;
 
-const db = new AWS.DynamoDB.DocumentClient({
-  apiVersion: '2012-08-10',
-  endpoint: new AWS.Endpoint(config.dataUrl),
-});
+const collectionName = 'user';
+const options = { useNewUrlParser: true, useUnifiedTopology: true };
 
-const hasEmail = async (email) => {
-  return new Promise((resolve, reject) => {
-    const params = {
-      TableName: 'user',
-      Key: {
-        email: email,
-      },
-      AttributesToGet: ['user_id'],
-    };
-
-    db.get(params, (err, data) => {
-      if (err) {
-        reject(err);
-      } else {
-        console.log(data);
-        resolve(data.item !== null);
-      }
-    });
+const getClient = async () => {
+  return MongoClient.connect(config.dataUrl, options).catch((err) => {
+    throw err;
   });
 };
 
-const saveUser = async (user) => {
-  return new Promise((resolve, reject) => {
-    const userId = v4();
-    const params = {
-      TableName: 'user',
-      Item: {
-        user_id: userId,
-        email: user.email,
-        salt: user.salt,
-        password: user.password,
-      },
-    };
+const hasEmail = async (email) => {
+  const client = await getClient();
 
-    db.put(params, (err, data) => {
-      if (err) reject(err);
-      resolve({ userId, ...user });
-    });
-  });
+  try {
+    const db = client.db(config.dbName);
+    const collection = db.collection(collectionName);
+    const result = await collection.findOne({ email: email });
+    return result !== null;
+  } catch (error) {
+    throw error;
+  } finally {
+    await client.close();
+  }
+};
+
+const saveUser = async (user) => {
+  const client = await getClient();
+
+  try {
+    const db = client.db(config.dbName);
+    const collection = db.collection(collectionName);
+    const { ops } = await collection.insertOne(user);
+    const [result] = ops;
+    return result;
+  } catch (error) {
+    throw error;
+  } finally {
+    await client.close();
+  }
 };
 
 module.exports = {

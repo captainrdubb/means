@@ -29,11 +29,6 @@ app.use(
   })
 );
 
-const whatThe = (location) => (req, res, next) => {
-  console.log(location, req.originalUrl, req.params);
-  next();
-};
-
 app.use('/api', requireAuth, apiRouter);
 
 app.use('/auth', authRouter, express.static(config.publicFolder));

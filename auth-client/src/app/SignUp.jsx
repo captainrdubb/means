@@ -13,7 +13,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link, useHistory } from 'react-router-dom';
-import Logo from '../Logo';
+import { registerAuthUser } from './clientApi';
+import Logo from './Logo';
 
 const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -78,7 +79,8 @@ const SignUp = () => {
     const validPassword = validatePassword(password);
     setIsValidPassword(validPassword);
 
-    if (validEmail && validPassword) formReference.submit();
+    registerAuthUser({ email, password });
+    // if (validEmail && validPassword) formReference.submit();
   };
 
   const validateEmail = (email) => emailPattern.test(email);

@@ -11,7 +11,7 @@ import {
   publishTo,
   DATA_KEYS,
   NAV_STATES,
-  deleteTransaction,
+  deleteTransactions,
   useTransactions,
 } from '../state';
 
@@ -39,7 +39,7 @@ const Transactions = () => {
     history.push(`/activity/${transaction.id}/edit`);
 
   const onDelete = () => {
-    deleteTransaction(selected).then(() => setSelected([]));
+    deleteTransactions(selected).then(() => setSelected([]));
     publishTo(DATA_KEYS.ACTION_FAB, { promptUser: false });
   };
 

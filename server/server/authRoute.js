@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const { config } = require('../config');
-const { authService } = require('../auth');
+const { authService, AUTH_ERRORS } = require('../auth');
 
 const router = express.Router();
 
@@ -11,11 +11,17 @@ router.get('/', (req, res) =>
 
 router.post('/signup', async (req, res, next) => {
   try {
-    const { email, password } = req.body;    
+    const { email, password } = req.body;
     const user = await authService.registerUser(email, password);
-    req.MEANS.user = { userId: user.userId };
+    req.MEANS.user = { userId: user._id };
     res.redirect('../');
   } catch (error) {
+    if (error.type === AUTH_ERRORS.REGISTRATION_ERROR) {
+      res.statusCode = 422;
+      res.statusMessage = error.message;
+      res.end();
+    }
+
     next(error);
   }
 });

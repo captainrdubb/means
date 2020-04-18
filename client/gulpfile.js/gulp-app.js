@@ -9,7 +9,7 @@ const babelify = require('babelify');
 const buffer = require('vinyl-buffer');
 const del = require('del');
 const config = require('./gulp-config');
-const replace = require('gulp-replace');
+const replace = require('browserify-replace');
 
 const Clean = () => {
   return del([`${config.DEST}/index.html`, `${config.DEST}/bundle.*`], {
@@ -28,10 +28,19 @@ const BuildDev = () => {
     extensions: ['.js', '.jsx'],
     debug: true,
     fullPaths: true,
+    transform: [
+      [
+        replace,
+        {
+          replace: {
+            from: /{gulp_replace_api_base_url}/,
+            to: config.DEV_API_URL,
+          },
+        },
+      ],
+      [babelify, { presets: ['@babel/preset-env', '@babel/preset-react'] }],
+    ],
   })
-    .transform(babelify, {
-      presets: ['@babel/preset-env', '@babel/preset-react'],
-    })
     .bundle()
     .on('error', console.error)
     .pipe(source(config.OUT))
@@ -46,11 +55,20 @@ const Build = () => {
   return browserify({
     entries: [config.ENTRY_POINT],
     extensions: ['.js', '.jsx'],
-    debug: true,
+    transform: [
+      [
+        replace,
+        {
+          replace: {
+            from: /{gulp_replace_api_base_url}/,
+            to: config.PROD_API_URL,
+          },
+        },
+      ],
+      [babelify, { presets: ['@babel/preset-env', '@babel/preset-react'] }],
+    ],
+    debug: false,
   })
-    .transform(babelify, {
-      presets: ['@babel/preset-env', '@babel/preset-react'],
-    })
     .bundle()
     .on('error', console.error)
     .pipe(source(config.MINIFIED_OUT))
@@ -70,26 +88,10 @@ const ReplaceHtml = () => {
     .pipe(gulp.dest(config.DEST));
 };
 
-const ReplaceVariablesDev = () => {
-  return gulp
-    .src(config.APP_CONFIG)
-    .pipe(replace('{gulp_replace_api_base_url}', config.DEV_API_URL))
-    .pipe(gulp.dest(path.dirname(config.APP_CONFIG), { overwrite: true }));
-};
-
-const ReplaceVariablesProd = (args) => {
-  return gulp
-    .src(config.APP_CONFIG)
-    .pipe(replace('{gulp_replace_api_base_url}', config.PROD_API_URL))
-    .pipe(gulp.dest(path.dirname(config.APP_CONFIG), { overwrite: true }));
-};
-
 module.exports = {
   Clean,
   Copy,
   Build,
   BuildDev,
   ReplaceHtml,
-  ReplaceVariablesDev,
-  ReplaceVariablesProd,
 };

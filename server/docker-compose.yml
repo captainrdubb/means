@@ -1,16 +1,8 @@
 version: '3.7'
 services:
-  dynamodb:
-    container_name: dynamodb
-    image: amazon/dynamodb-local:latest
-    entrypoint: java
-    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal"
+  mongodb:
+    container_name: means-mongodb
+    image: mongo:latest
     restart: always
-    volumes:
-      - dynamodb-data:/home/dynamodblocal
     ports:
       - '8000:8000'
-
-volumes: 
-  dynamodb-data:
-    

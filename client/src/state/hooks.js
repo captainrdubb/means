@@ -1,26 +1,5 @@
 import { useState, useEffect } from 'react';
-import { keys, subscribe, state } from './Bus';
-
-export const selectJob = (id) => {
-  if (!id) return null;
-  const jobs = state[keys.JOBS].getValue();
-  const index = jobs.findIndex((f) => f.id == id);
-  return jobs[index];
-};
-
-export const selectClient = (id) => {
-  if (!id) return null;
-  const clients = state[keys.CLIENTS].getValue();
-  const index = clients.findIndex((c) => c.id == id);
-  return clients[index];
-};
-
-export const selectTransaction = (id) => {
-  if (!id) return null;
-  const transactions = state[keys.TRANSACTIONS].getValue();
-  const index = transactions.findIndex((a) => a.id == id);
-  return transactions[index];
-};
+import { keys, subscribe } from './bus';
 
 export const jobsHook = () => {
   const [jobs, setJobs] = useState([]);
@@ -55,13 +34,13 @@ export const transactionHook = () => {
   return activities;
 };
 
-export const userHook = () => {
-  const [user, setUser] = useState();
+export const authUserHook = () => {
+  const [authUser, setAuthUser] = useState();
 
   useEffect(() => {
-    const subscription = subscribe(keys.USER, setUser, true);
+    const subscription = subscribe(keys.AUTH_USER, setAuthUser, true);
     return () => subscription.unsubscribe();
   }, []);
 
-  return user;
+  return authUser;
 };

@@ -10,11 +10,11 @@ export const keys = {
   JOBS: 'JOBS',
   ACTION_FAB: 'ACTION_FAB',
   TRANSACTIONS: 'TRANSACTIONS',
-  USER: 'USER',
+  AUTH_USER: 'AUTH_USER',
 };
 
 const api = {
-  [keys.USER]: { get: getAuthUser },
+  [keys.AUTH_USER]: { get: getAuthUser },
 };
 
 export const appBarNav = {
@@ -46,7 +46,7 @@ state[keys.ACTION_FAB] = new BehaviorSubject({
 });
 
 // DATA STATE
-state[keys.USER] = new BehaviorSubject(null);
+state[keys.AUTH_USER] = new BehaviorSubject(null);
 
 state[keys.TRANSACTIONS] = new BehaviorSubject([
   {

@@ -1,4 +1,7 @@
-import { state, keys, publish } from './Bus';
+import { ajax } from 'rxjs/ajax';
+import { map, catchError } from 'rxjs/operators';
+import { state, keys, publish } from './bus';
+import { config } from '../config';
 
 export const saveJob = (job) => {
   new Promise((resolve, reject) => {
@@ -47,7 +50,7 @@ export const saveClient = (client) => {
   new Promise((resolve, reject) => {
     try {
       const clients = state[keys.CLIENTS].getValue();
-      
+
       if (!client.id) {
         client.id = Math.round(Math.random() * (1000000 - 1) + 1);
         clients.push(client);
@@ -112,7 +115,7 @@ export const saveTransaction = (transaction) => {
   });
 };
 
-export const deleteTransaction = (ids) => {
+export const deleteTransactions = (ids) => {
   return new Promise((resolve, reject) => {
     try {
       const temp = [];

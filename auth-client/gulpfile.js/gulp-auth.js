@@ -58,7 +58,7 @@ const ReplaceHtmlAuth = () => {
     .src(path.AUTH_HTML)
     .pipe(
       htmlreplace({
-        js: `/${path.AUTH_MINIFIED_OUT}`,
+        js: `/auth/${path.AUTH_MINIFIED_OUT}`,
       })
     )
     .pipe(gulp.dest(path.DEST));

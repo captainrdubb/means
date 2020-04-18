@@ -1,3 +1,2 @@
-const authService = require('./authService');
-
-exports.authService = authService;
+exports.authService = require('./authService');
+exports.AUTH_ERRORS = require('./errorTypes');
